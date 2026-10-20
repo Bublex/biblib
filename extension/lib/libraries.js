@@ -1,6 +1,12 @@
 // Réseaux de bibliothèques pris en charge.
 // Chaque entrée indique le logiciel de catalogue (« connector ») et ses paramètres.
 
+/** Réseau Syracuse sans réglage particulier. `scenario` : code « SC= » de la recherche avancée du portail,
+ *  CATALOGUE quand le portail le propose (catalogue seul), sinon DEFAULT (tout le portail). */
+function syracuse(id, city, name, base, { scenario = 'DEFAULT', portal = 'Default', short = city } = {}) {
+  return { id, name, short, city, connector: 'syracuse', base, portal, scenario };
+}
+
 export const LIBRARIES = [
   {
     id: 'paris',
@@ -34,17 +40,6 @@ export const LIBRARIES = [
     sf: '+TypeOfDocumentFacet:BordeauxMetropolePhysicalDocument',
     isbnSyntax: 'plain',
     showGroups: true,
-  },
-  {
-    id: 'merignac',
-    name: 'Médiathèques de Mérignac',
-    short: 'Mérignac',
-    city: 'Mérignac',
-    connector: 'syracuse',
-    // Catalogue propre à la ville, distinct du catalogue commun de Bordeaux Métropole.
-    base: 'https://www.mediatheque.merignac.com',
-    portal: 'Default',
-    scenario: 'DEFAULT',
   },
   {
     id: 'lyon',
@@ -144,6 +139,64 @@ export const LIBRARIES = [
     portal: 'Default',
     scenario: 'CATALOGUE',
   },
+
+  // Autres réseaux sous Syracuse, par ordre alphabétique.
+  syracuse('agen', 'Agen', 'Médiathèque Lacépède', 'https://www.agen-mediatheque.fr', { scenario: 'CATALOGUE' }),
+  syracuse('ajaccio', 'Ajaccio', 'Bibliothèques et médiathèques d’Ajaccio', 'https://bibliotheque.ajaccio.fr'),
+  syracuse('arles', 'Arles', 'Médiathèques d’Arles', 'https://mediatheque.ville-arles.fr'),
+  syracuse('arlysere', 'Arlysère', 'Médiathèques du réseau Arlysère (Albertville)', 'https://mediatheques.arlysere.fr'),
+  syracuse('aubagne', 'Aubagne', 'Médiathèque Marcel-Pagnol', 'https://mediatheque.aubagne.fr'),
+  syracuse('aulnay-sous-bois', 'Aulnay-sous-Bois', 'Réseau des bibliothèques d’Aulnay-sous-Bois', 'https://reseaudesbibliotheques.aulnay-sous-bois.fr'),
+  syracuse('avion', 'Avion', 'Médiathèque d’Avion', 'https://www.mediatheque-avion.fr'),
+  syracuse('biarritz', 'Biarritz', 'Médiathèque de Biarritz', 'https://www.mediatheque-biarritz.fr'),
+  syracuse('boulogne-billancourt', 'Boulogne-Billancourt', 'Médiathèques de Boulogne-Billancourt', 'https://mediatheques.boulognebillancourt.com'),
+  syracuse('bourges', 'Bourges', 'Bibliothèques de Bourges', 'https://mediatheque.ville-bourges.fr'),
+  syracuse('bruay-la-buissiere', 'Bruay-la-Buissière', 'Médiathèque de Bruay-la-Buissière', 'https://mediatheque.bruaylabuissiere.fr'),
+  syracuse('bry-sur-marne', 'Bry-sur-Marne', 'Médiathèque Jules-Verne', 'https://mediatheque.brysurmarne.fr'),
+  syracuse('cagnes-sur-mer', 'Cagnes-sur-Mer', 'Médiathèque de Cagnes-sur-Mer', 'https://mediatheque.cagnes.fr'),
+  syracuse('capi', 'Porte de l’Isère', 'Médiathèques de la CAPI (Bourgoin-Jallieu…)', 'https://portail-mediatheque.capi-agglo.fr', { short: 'CAPI' }),
+  syracuse('cesson-sevigne', 'Cesson-Sévigné', 'Médiathèque de Cesson-Sévigné', 'https://www.mediatheque-cesson-sevigne.fr'),
+  syracuse('cholet', 'Cholet', 'Médiathèque et bibliothèques du Choletais', 'https://e-changes.cholet.fr'),
+  syracuse('coueron', 'Couëron', 'Médiathèque de Couëron', 'https://mediatheque.ville-coueron.fr'),
+  syracuse('deville-les-rouen', 'Déville-lès-Rouen', 'Médiathèque Anne-Frank', 'https://mediatheque-anne-frank.fr'),
+  syracuse('dijon', 'Dijon', 'Bibliothèque municipale de Dijon', 'https://bm.dijon.fr', { scenario: 'CATALOGUE' }),
+  syracuse('domitienne', 'La Domitienne', 'Médiathèques en Domitienne (Hérault)', 'https://mediatheques.ladomitienne.com'),
+  syracuse('douarnenez', 'Douarnenez', 'Médiathèque Georges-Perros', 'https://mediatheque-douarnenez.fr', { scenario: 'CATALOGUE' }),
+  syracuse('dugny', 'Dugny', 'Médiathèque de Dugny', 'https://dugny.syracuse.cloud', { portal: 'PORTAIL' }),
+  // Catalogue commun aux quatre villes, publié en HTTP.
+  syracuse('sitpi', 'Échirolles, Fontaine, Pont-de-Claix, Saint-Martin-d’Hères', 'Médiathèques du SITPI', 'http://syracuse.sitpi.fr', { short: 'SITPI' }),
+  syracuse('evreux', 'Évreux', 'Médiathèques d’Évreux', 'https://mediatheques.evreux.fr'),
+  syracuse('fontainebleau', 'Fontainebleau', 'Médiathèque de Fontainebleau', 'https://mediatheque.fontainebleau.fr'),
+  syracuse('fougeres', 'Fougères Agglomération', 'Médiathèques de Fougères Agglomération', 'https://mediatheques.fougeres-agglo.bzh', { short: 'Fougères' }),
+  syracuse('grand-narbonne', 'Grand Narbonne', 'Médiathèques du Grand Narbonne', 'https://mediatheques.legrandnarbonne.com'),
+  syracuse('grand-orly-seine-bievre', 'Grand-Orly Seine Bièvre', 'Médiathèques et ludothèques de Grand-Orly Seine Bièvre', 'https://www.mediathequesludotheques.grandorlyseinebievre.fr'),
+  // Portail servi sous /EXPLOITATION.
+  syracuse('grand-poitiers', 'Grand Poitiers', 'Médiathèques de Grand Poitiers', 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION', { scenario: 'CATALOGUE', short: 'Poitiers' }),
+  syracuse('henin-carvin', 'Hénin-Carvin', 'Réseau communautaire des médiathèques d’Hénin-Carvin', 'https://www.mediatheques-rcm.fr', { scenario: 'CATALOGUE' }),
+  syracuse('issoudun', 'Issoudun', 'Médiathèque d’Issoudun', 'https://www.mediatheque.issoudun.fr'),
+  syracuse('la-fleche', 'La Flèche', 'Bibliothèque intercommunale du Pays fléchois', 'https://www.bibliothequemunicipaledelafleche.fr'),
+  syracuse('la-rochelle', 'La Rochelle', 'Médiathèques de l’agglomération de La Rochelle', 'https://mediatheques.agglo-larochelle.fr', { scenario: 'CATALOGUE' }),
+  syracuse('le-port', 'Le Port (La Réunion)', 'Médiathèques du Port', 'https://mediatheque.ville-port.re', { short: 'Le Port' }),
+  syracuse('le-tampon', 'Le Tampon (La Réunion)', 'Médiathèques du Tampon', 'https://www.mediatheque-tampon.fr', { short: 'Le Tampon' }),
+  syracuse('lormont', 'Lormont', 'Médiathèque du Bois-Fleuri', 'https://mediatheque.lormont.fr'),
+  syracuse('macon', 'Mâcon', 'Médiathèque de Mâcon', 'https://mediatheque.macon.fr'),
+  syracuse('malakoff', 'Malakoff', 'Médiathèque de Malakoff', 'https://mediatheque.malakoff.fr'),
+  syracuse('marcq-en-baroeul', 'Marcq-en-Barœul', 'Médiathèque La Corderie', 'https://corderie.marcq-en-baroeul.fr'),
+  syracuse('massy', 'Massy', 'Médiathèques de Massy', 'https://mediatheque.ville-massy.fr'),
+  syracuse('merignac', 'Mérignac', 'Médiathèques de Mérignac', 'https://www.mediatheque.merignac.com'),
+  syracuse('muret', 'Muret', 'Médiathèque de Muret', 'https://mediatheque.mairie-muret.fr', { scenario: 'CATALOGUE' }),
+  syracuse('reims', 'Reims', 'Bibliothèques de Reims', 'https://www.bm-reims.fr'),
+  syracuse('rochefort-ocean', 'Rochefort Océan', 'Réseau M, médiathèques de Rochefort Océan', 'https://www.reseau-m.fr', { short: 'Rochefort' }),
+  syracuse('rumilly', 'Rumilly', 'Médiathèque de Rumilly', 'https://www.mediatheque-rumilly74.fr'),
+  syracuse('saint-etienne', 'Saint-Étienne', 'Médiathèques de Saint-Étienne', 'https://mediatheques.saint-etienne.fr', { scenario: 'CATALOGUE' }),
+  syracuse('saint-lo', 'Saint-Lô', 'Médiathèques de Saint-Lô', 'https://smwe-mdsl.syracuse.cloud'),
+  syracuse('saint-louis', 'Saint-Louis (Haut-Rhin)', 'Médiathèque Le Parnasse', 'https://mediatheque-saint-louis.syracuse.cloud', { short: 'Saint-Louis' }),
+  syracuse('sceaux', 'Sceaux', 'Médiathèque de Sceaux', 'https://bibliotheque.sceaux.fr'),
+  syracuse('toulon', 'Toulon', 'Réseau des bibliothèques de Toulon', 'https://mediatheques.toulon.fr'),
+  syracuse('vevey', 'Vevey (Suisse)', 'Bibliothèque municipale de Vevey', 'https://biblio.vevey.ch', { short: 'Vevey' }),
+  syracuse('villemomble', 'Villemomble', 'Médiathèque de Villemomble', 'https://mediatheque.villemomble.fr'),
+  syracuse('villenave-d-ornon', 'Villenave-d’Ornon', 'Médiathèques de Villenave-d’Ornon', 'https://mediatheques.villenavedornon.fr'),
+  syracuse('villeurbanne', 'Villeurbanne', 'Médiathèques de Villeurbanne', 'https://cataloguebm.villeurbanne.fr', { scenario: 'CATALOGUE' }),
 ];
 
 export function getLibrary(id) {

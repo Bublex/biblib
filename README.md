@@ -24,15 +24,15 @@ Pour une archive à partager : `npm run zip` produit `biblib.zip`.
 | Paris | Syracuse (Archimed) | Le 20/10/2026, le service de disponibilité de Paris renvoyait une erreur, y compris sur son propre site : la notice s'affiche, la disponibilité est marquée « à vérifier ». |
 | Bordeaux | inMedia (Bibliomondo) | Catalogue commun à la métropole, filtré sur les annexes de la ville. |
 | Bordeaux Métropole | inMedia | Toutes les communes, groupées par commune. |
-| Mérignac | Syracuse | Catalogue propre à la ville : médiathèque Michel Sainte-Marie et antennes de quartier. |
 | Lyon | inMedia | |
 | Marseille | inMedia | |
 | Nantes | inMedia | |
 | Toulouse | Web2 (Rosalis) | Catalogue servi uniquement en HTTP, pages HTML analysées. |
 | Nice, Montpellier, Strasbourg, Lille, Grenoble | Syracuse | |
 | Rennes (Champs Libres) | Encore (Innovative) | Pages HTML analysées. |
+| 54 autres réseaux : Dijon, Reims, Saint-Étienne, Toulon, Villeurbanne, Grand Poitiers, La Rochelle, Boulogne-Billancourt, Mérignac, Lormont, Villenave-d'Ornon… | Syracuse | Liste complète dans `extension/lib/libraries.js`. Le catalogue du SITPI (Échirolles, Fontaine, Pont-de-Claix, Saint-Martin-d'Hères) est publié en HTTP. |
 
-D'autres villes utilisent Syracuse ou inMedia : pour en ajouter une, voir plus bas.
+La page de réglages propose un champ de recherche par ville ou par réseau. D'autres villes utilisent Syracuse ou inMedia : pour en ajouter une, voir plus bas.
 
 ## Sites de livres reconnus
 
@@ -77,8 +77,8 @@ Détail inMedia : chaque appel porte l'en-tête `X-InMedia-Authorization: Bearer
 
 Si son catalogue tourne sous Syracuse (URL en `/Default/doc/SYRACUSE/…`) ou inMedia (présence de `/in/rest/api/settings.js`) :
 
-1. Ajoutez une entrée dans `extension/lib/libraries.js` (voir les exemples : `scenario` pour Syracuse, `isbnSyntax` pour inMedia).
-2. Ajoutez son domaine à `optional_host_permissions` dans `extension/manifest.json`.
+1. Ajoutez une entrée dans `extension/lib/libraries.js`. Pour Syracuse, une ligne `syracuse(id, ville, nom, adresse)` suffit ; passez `{ scenario: 'CATALOGUE' }` si la recherche avancée du portail (`form.aspx?SC=…`) propose ce scénario. Pour inMedia, voir les exemples (`isbnSyntax`).
+2. Ajoutez son domaine à `optional_host_permissions` dans `extension/manifest.json` (`npm test` signale un oubli).
 3. Vérifiez : `node tools/live-check.mjs <id>`.
 
 ## Développement

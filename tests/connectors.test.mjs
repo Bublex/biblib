@@ -61,6 +61,20 @@ test('Syracuse : recherche par ISBN (OR), exemplaires et disponibilité', async 
   assert.equal(calls[0].options.referrerPolicy, 'no-referrer');
 });
 
+test('Syracuse : portail servi sous un sous-dossier (Grand Poitiers)', async () => {
+  mockFetch([
+    ['Search.svc/Search', (_url, opts) => {
+      assert.equal(JSON.parse(opts.body).query.ScenarioCode, 'CATALOGUE');
+      return { success: true, d: { Results: [{ Resource: { RscId: '7', RscBase: 'SYRACUSE', Ttl: 'Le Petit Prince' }, SeekForHoldings: true }] } };
+    }],
+    ['GetHoldings', () => ({ success: true, d: { Holdings: [{ Site: 'François-Mitterrand', Statut: 'Disponible', IsAvailable: true }] } })],
+  ]);
+  const result = await lookupLibrary(getLibrary('grand-poitiers'), BOOK);
+  assert.equal(calls[0].url, 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION/Portal/Recherche/Search.svc/Search');
+  assert.equal(result.records[0].url, 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION/Default/doc/SYRACUSE/7');
+  assert.equal(result.searchUrl, 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION/Default/search.aspx?SC=CATALOGUE&QUERY=9782070612758');
+});
+
 test('Syracuse : SIGB en panne -> notice affichée, disponibilité « à vérifier »', async () => {
   mockFetch([
     ['Search.svc/Search', () => ({ success: true, d: { Results: [{ Resource: { RscId: '1', RscBase: 'SYRACUSE', Ttl: 'Le Petit Prince' }, FriendlyUrl: 'https://x/doc', SeekForHoldings: true }] } })],

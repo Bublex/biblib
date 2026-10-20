@@ -2,6 +2,7 @@ import { LIBRARIES, getLibrary, originPatterns } from '../lib/libraries.js';
 import { getSettings, saveSettings } from '../lib/settings.js';
 import { lookupLibrary } from '../lib/lookup.js';
 import { humanError } from '../lib/net.js';
+import { stripAccents } from '../lib/text.js';
 
 const TEST_BOOK = { isbns: ['9782070612758', '9782070408504'], title: 'Le Petit Prince', authors: ['Antoine de Saint-Exupéry'] };
 
@@ -76,9 +77,23 @@ async function runTest(lib, output) {
   }
 }
 
+// « merignac » trouve « Mérignac », « baroeul » trouve « Barœul » : comparaison sans accents ni majuscules.
+const fold = (s) => stripAccents(s).toLowerCase().replace(/œ/g, 'oe').replace(/’/g, "'");
+const BY_CITY = [...LIBRARIES].sort((a, b) => a.city.localeCompare(b.city, 'fr'));
+
+function filterLibraries() {
+  const words = fold($('libFilter').value).split(/\s+/).filter(Boolean);
+  let shown = 0;
+  for (const row of $('libs').children) {
+    row.hidden = !words.every((w) => row.dataset.search.includes(w));
+    if (!row.hidden) shown++;
+  }
+  $('libsEmpty').hidden = shown > 0;
+}
+
 async function renderLibraries() {
   const list = $('libs');
-  const rows = await Promise.all(LIBRARIES.map(async (lib) => {
+  const rows = await Promise.all(BY_CITY.map(async (lib) => {
     const enabled = settings.enabledLibraries.includes(lib.id);
     const permitted = enabled && (await hasPermission(lib));
     const output = el('p', { class: 'test-result', role: 'status' });
@@ -98,18 +113,20 @@ async function renderLibraries() {
     } else if (enabled) {
       actions.push(el('button', { type: 'button', class: 'secondary small', onclick: () => runTest(lib, output) }, 'Tester'));
     }
-    return el('li', { class: `lib${enabled ? ' is-on' : ''}` },
+    const host = new URL(lib.base).host;
+    return el('li', { class: `lib${enabled ? ' is-on' : ''}`, 'data-search': fold(`${lib.city} ${lib.name} ${lib.short} ${host}`) },
       el('label', { class: 'lib-label', for: `lib-${lib.id}` },
         checkbox,
         el('span', { class: 'switch', 'aria-hidden': 'true' }),
         el('span', { class: 'lib-text' },
           el('span', { class: 'lib-city' }, lib.city),
           el('span', { class: 'lib-name' }, lib.name),
-          el('span', { class: 'lib-host' }, new URL(lib.base).host))),
+          el('span', { class: 'lib-host' }, host))),
       actions.length ? el('div', { class: 'lib-actions' }, actions) : null,
       output);
   }));
   list.replaceChildren(...rows);
+  filterLibraries();
 }
 
 // --- Préférences de recherche ---
@@ -169,6 +186,8 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (changes.hiddenSites) renderHiddenSites();
   if (changes.enabledLibraries) renderLibraries();
 });
+
+$('libFilter').addEventListener('input', filterLibraries);
 
 bindPreferences();
 renderLibraries();
