@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblib — Réglages</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <img src="../icons/icon128.png" alt="" width="56" height="56">
+      <div>
+        <h1>Biblib</h1>
+        <p>Sur la fiche d’un livre (Amazon, Babelio, Bedetheque, Fnac…), Biblib vous dit s’il est dans vos bibliothèques, s’il est disponible, et vous emmène sur la notice pour le réserver.</p>
+      </div>
+    </header>
+
+    <section class="panel" aria-labelledby="libs-title">
+      <div class="panel-head">
+        <h2 id="libs-title">Mes bibliothèques</h2>
+        <p>Cochez les réseaux où vous êtes inscrit·e. Chrome vous demandera d’autoriser l’accès au catalogue choisi, et à lui seul.</p>
+      </div>
+      <ul class="libs" id="libs"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="search-title">
+      <div class="panel-head">
+        <h2 id="search-title">Recherche</h2>
+      </div>
+      <div class="fields">
+        <label class="check">
+          <input type="checkbox" id="searchEditions">
+          <span><strong>Chercher aussi les autres éditions</strong><small>Quand la page liste plusieurs ISBN (Babelio par exemple), on les interroge tous en une fois.</small></span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="titleFallback">
+          <span><strong>Si l’ISBN est introuvable, chercher par titre et auteur</strong><small>Utile quand la bibliothèque possède une autre édition (poche, réédition…).</small></span>
+        </label>
+        <label class="field">
+          <span>Ouvrir le panneau automatiquement</span>
+          <select id="autoOpen">
+            <option value="never">Jamais : la pastille suffit</option>
+            <option value="available">Quand un exemplaire est disponible</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Position de la pastille</span>
+          <select id="position">
+            <option value="right">En bas à droite</option>
+            <option value="left">En bas à gauche</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="fav-title">
+      <div class="panel-head">
+        <h2 id="fav-title">Mes bibliothèques favorites</h2>
+        <p>Marquez une annexe d’une étoile dans le panneau : elle apparaît en premier et la pastille vous dit si le livre y est disponible.</p>
+      </div>
+      <ul class="chips" id="favorites"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="hidden-title" id="hidden-section">
+      <div class="panel-head">
+        <h2 id="hidden-title">Sites où Biblib est masqué</h2>
+      </div>
+      <ul class="chips" id="hiddenSites"></ul>
+    </section>
+
+    <section class="panel privacy" aria-labelledby="privacy-title">
+      <div class="panel-head">
+        <h2 id="privacy-title">Vos données restent chez vous</h2>
+      </div>
+      <ul class="bullets">
+        <li>Vos réglages et favoris sont enregistrés <strong>uniquement sur cet appareil</strong> (pas de synchronisation, pas de compte, pas de serveur Biblib).</li>
+        <li>Seules l’ISBN, le titre et l’auteur du livre consulté sont envoyés, et <strong>uniquement aux catalogues que vous avez cochés</strong>. Aucune statistique, aucun traceur.</li>
+        <li>Biblib ne lit que les pages des sites de livres listés dans l’extension, et n’envoie rien tant qu’aucun livre n’est détecté.</li>
+        <li>La réservation se fait sur le site de votre bibliothèque, avec votre compte lecteur : Biblib ne voit ni votre numéro de carte ni votre mot de passe.</li>
+      </ul>
+      <button type="button" class="secondary" id="clearCache">Vider les résultats en cache</button>
+      <span class="hint" id="cacheStatus" role="status"></span>
+    </section>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

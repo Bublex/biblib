@@ -1,0 +1,2149 @@
+
+    
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Application: Encore 6.6.0 -->
+<!-- Page: SearchResultsPage -->
+<!-- Generated: Tue Oct 20 21:39:26 CEST 2026 -->
+<html>
+<head>
+<meta name="generator" content="Tapestry Application Framework, version 4.1.6-SNAPSHOT" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Encore -- horde du contrevent</title>
+<meta id="emViewport" name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+<base href="https://opac.si.leschampslibres.fr/iii/encore/"></base>
+<script type="text/javascript" src="https://opac.si.leschampslibres.fr:443/iii/encore/resources/js/patch.array.js"></script>
+<script type="text/javascript" src="https://opac.si.leschampslibres.fr:443/iii/encore/resources/js/jquery-3.6.0.min.js"></script>
+<SCRIPT TYPE="TEXT/JAVASCRIPT">var timeoutSettings = {
+logoutUrl: "https://opac.si.leschampslibres.fr:443/iii/encore/logoutFilterRedirect?suite=pearl",
+keepaliveUrl: "https://opac.si.leschampslibres.fr/iii/encore/StatusPage.external;jsessionid=0?lang=frf&amp;suite=pearl",
+sessionTimeout: 1800000,
+moreSessionTime: 1800000,
+notificationBeforeTime: 120000
+};
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" SRC="https://opac.si.leschampslibres.fr:443/iii/encore/resources/js/session-timeout.js"></SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT">window['adrum-start-time'] = new Date().getTime();</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" SRC="https://opac.si.leschampslibres.fr:443/iii/encore/resources/js/adrum.js"></SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" SRC="https://opac.si.leschampslibres.fr:443/iii/encore/resources/js/googleMaps.js"></SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" SRC="https://opac.si.leschampslibres.fr:443/iii/encore/resources/gold/js/ToggleWidget.js"></SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" SRC="https://opac.si.leschampslibres.fr:443/iii/encore/resources/js/encore-deploy-442f9e795b.js"></SCRIPT>
+<!--[if IE 7]><LINK TYPE="text/css" REL="stylesheet" HREF="https://opac.si.leschampslibres.fr:443/iii/encore/resources/gold/css/dpstyles_ie7.css"></LINK>
+<![endif]--><SCRIPT TYPE="TEXT/JAVASCRIPT" SRC="https://opac.si.leschampslibres.fr:443/iii/encore/resources/gold/js/toggle.js"></SCRIPT>
+<script type="text/javascript">
+djConfig = {"parseOnLoad":true,"blankGif":"resources/mobile/images/mobileSprite.png"}
+</script>
+<script type="text/javascript" src="/iii/encore/resources/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="/iii/encore/resources/js/dojo/encore.js"></script>
+<script type="text/javascript" src="/iii/encore/resources/js/tapestry/tapestry.js"></script>
+
+<script type="text/javascript">
+dojo.require("tapestry.namespace");
+tapestry.requestEncoding='UTF-8';
+</script>
+<link rel="stylesheet" type="text/css" href="resources/gold/css/dpstyles.css" />
+<link rel="stylesheet" type="text/css" href="local/css/iiistyles.css" />
+<link rel="stylesheet" type="text/css" href="local/gold/css/styles.css" />
+<link rel="shortcut icon" type="image/x-icon" href="https://opac.si.leschampslibres.fr:443/iii/encore/resources/gold/images/favicon.ico" />
+<link rel="stylesheet" type="text/css" media="all" href="resources/gold/css/popupdialog.css" />
+</head>
+        
+<body class="tundra gold searchResultsPage" id="bodyComponent">
+<script type="text/javascript"><!--
+var TIMEZONE_OFFSET_COOKIE_NAME  = 'client-timezone-offset';
+
+                function setTimeZoneOffsetCookie() {
+                    var browserTime = new Date();
+
+                    if (dojo && dojo.cookie) {
+                        // offset representing the time-zone difference, in minutes, from UTC to current time.
+                        // EXAMPLE: UTC+3 -> 180
+                        dojo.cookie(TIMEZONE_OFFSET_COOKIE_NAME, -browserTime.getTimezoneOffset(), { path: "/" });
+                    }
+                };
+
+                setTimeZoneOffsetCookie();
+var consortia = function () {
+
+                function doSubmit() {
+                    document.getElementById("formConsortiaDropdown").submit();
+                    return false;
+                }
+
+                return {
+                    doSubmit: doSubmit
+                };
+
+            }();
+
+
+
+
+
+
+
+
+
+
+dojo.require("tapestry.dialog");
+var de = [];
+        
+        var doBind = function(x) {
+        
+            var deferred = tapestry.bind(x.url, {beventname: 'ajaxOnloadStart', bcomponentidpath: x.componentExId, bcomponentid: x.componentId, sequenceid: x.sequenceId});
+            
+        }
+    
+    
+    de[de.length] = { "url" : '/iii/encore/home;jsessionid=0?component=ajaxBatchStarterFacetsComponent.batchStarterAnyComponent&lang=frf&page=AJAXPage&service=directevent&session=T&suite=pearl',
+                       "componentExId" : 'SearchResultsPage/ajaxBatchStarterFacetsComponent.batchStarterAnyComponent',
+                       "componentId" : 'batchStarterAnyComponent',
+                       "sequenceId" : ''};
+dojo.require("tapestry.event");
+de[de.length] = { "url" : '/iii/encore/home;jsessionid=0?component=ajaxBatchStarterUrgentComponent.batchStarterAnyComponent&lang=frf&page=AJAXPage&service=directevent&session=T&suite=pearl',
+                       "componentExId" : 'SearchResultsPage/ajaxBatchStarterUrgentComponent.batchStarterAnyComponent',
+                       "componentId" : 'batchStarterAnyComponent',
+                       "sequenceId" : ''};
+
+de[de.length] = { "url" : '/iii/encore/home;jsessionid=0?component=ajaxBatchStarterLocalComponent.batchStarterAnyComponent&lang=frf&page=AJAXPage&service=directevent&session=T&suite=pearl',
+                       "componentExId" : 'SearchResultsPage/ajaxBatchStarterLocalComponent.batchStarterAnyComponent',
+                       "componentId" : 'batchStarterAnyComponent',
+                       "sequenceId" : ''};
+
+de[de.length] = { "url" : '/iii/encore/home;jsessionid=0?component=ajaxBatchStarterRemoteComponent.batchStarterAnyComponent&lang=frf&page=AJAXPage&service=directevent&session=T&suite=pearl',
+                       "componentExId" : 'SearchResultsPage/ajaxBatchStarterRemoteComponent.batchStarterAnyComponent',
+                       "componentId" : 'batchStarterAnyComponent',
+                       "sequenceId" : ''};
+// --></script>
+            <span id="el-e3561176-4dbc-4572-bc32-dd793735d856" dir="LTR" class="baseDirectionInsertComponent">
+                
+                <noscript>
+                    <meta http-equiv="refresh" content="0; URL=https://opac.si.leschampslibres.fr:443/iii/encore/resources/NoJavascriptPage.html" id="noScriptMetaRefreshComponent"></meta>
+                </noscript>
+
+                
+
+    
+
+
+
+                
+
+    
+
+
+
+                <div id="contentWrapper">
+
+                    
+                        <div id="customEncoreHeader">
+                            <link rel="stylesheet" href="/iii/encore/local/custom/custom.css?v=0.0.4" type="text/css" media="screen" >
+
+<div class="header">
+   <div class="logo">
+      <a href="https://sbib.si.leschampslibres.fr/patroninfo">
+         Problème de connexion sur le compte lecteur, cliquer ici pour y accéder.
+      </a>
+       </div>
+</div>
+<div id="brm_message" style="display:none;">
+Le pôle Musiques est actuellement fermé pour travaux. À compter du mercredi 1er septembre, un espace au 6e étage proposera une offre réduite mais actualisée.
+</div>
+<script type="text/javascript" src="/iii/encore/local/custom/custom.js?v=0.4.4"></script>
+
+<!--<script type="text/javascript" src="https://www.electre.com/widgets.ashx?id=bmchampslibres_472"></script>-->
+<script type="text/javascript" src="https://passenger.electre.com/widgets.ashx?id=bmchampslibres_472"></script>
+                        </div>
+                    
+
+                    <div id="bannertop">
+                        <div id="bannerMenu">
+                          <span class="myAccountInfo">
+                           
+     
+        <span id="bookCartLinkAnyComponent">
+			
+			
+				<a id="bookCartLinkComponent_0" href="/iii/encore/bookcart;jsessionid=0?lang=frf&amp;suite=pearl">
+					Mon panier : 0 exemplaire(s)</a>
+			
+			<!--needed so IE updates asynch see  c1131611-->
+			<span class="noTags">&nbsp;</span>
+		</span>
+    
+
+                             
+     
+    <!--we may need to separate our the image/alerts from the my account logic-->
+    
+        <span id="saveThisSearchAnyComponent">
+
+            
+
+        </span>
+
+        <span class="alerts_update" id="patronAlertsUpdateAnyComponent">
+            
+         </span>
+
+        
+
+        
+    
+        <!--login area gold -->
+        
+            <!--need to close up white space so links space correctly in IE footer -->
+            <span class="myAccountBar">|</span>
+
+            <!--Login component-->
+            
+
+    
+
+    
+        <!--Login btn-->
+        <a id="GenericLink_0" title="You are not signed in. Select to sign in." class="loginLogoutLink button button__login-logout" href="/iii/encore/search/C__Shorde%20du%20contrevent__Orightresult__U/Sdologin?lang=frf&amp;ivts=%2FK1oZyaVM6%2FL8l6xeuuW0g%3D%3D&amp;casts=xTea0yBHeFtfaTZriA097A%3D%3D&amp;loginReason=doDefault">
+
+            <span class="button__text" id="Insert_0">S'identifier</span>
+        </a>
+    
+
+
+        
+
+        
+
+        <!--logout dialog-->
+        
+        <!--end login area-->
+    
+
+    
+  
+   
+   <!--alerts-->
+    <span class="myAccountDet" id="myAccountDetAnyComponent">
+        
+    </span>
+   <!--end alerts area-->
+
+                           </span>
+                        </div>
+                        <div class="encoreLogo"><a href=""><img src="local/gold/images/bmren_toplogo.gif" alt=""/></a><br/><a href="http://sbib.si.leschampslibres.fr/search*frf" style="font-size:x-small;" target="_blank">Recherche par index</a><br/><a href="http://www.bibliotheque.leschampslibres.fr/collections/nouveautes/" style="font-size:x-small;" target="_blank">Les nouveautés des Champs Libres</a><br/><a href="https://www.bibliotheques.rennes.fr/collections/nouveautes/" style="font-size:x-small;" target="_blank">Les nouveautés des bibliothèques </a></div>
+                    </div>
+
+                    <!-- top block -->
+                    
+                        
+        
+            
+	<div id="searchbox" name="searchbox">
+		<form method="GET" action="/iii/encore/SearchResultsPage,queryComponent.searchFormComponent.sdirect" id="searchFormComponent">
+<div style="display:none;" id="searchFormComponenthidden"><input type="hidden" name="formids" value="If_5,searchString,If_7,If_9,searchImageSumbitComponent" />
+<input type="hidden" name="seedids" value="ZH4sIAAAAAAAAAIVT247aMBDlof0THjdSCJfCI00vIEEXAVX7VjnOmFg4Htc2u2K/qb/Wf+jkUq1NkfqQZDzXM+c4v34P3r4MBm8G9EwfHNgnyWGYPhh2aj4ca4MatG9t7ZnUYMl24JxE3ViGXidU5Y4qvllmDNg8qHIVKBU6Ciyv4RlUMi1SVo4KkRQzliaT8XiWLOZinozGKc8EX2QFLylTMAKHeg+KeRoeNtF44FYavwXP9iAsuCoM54hnCe4oa3gh36MQDnwe7XYnYcV0qcB2nV+77FBJfv2CXgoZ77oWw0lLEx17KloG8Dm/OI/1ClgJdi2iyWFEkwA+JgvPObN+I/X51T+K/Esd8flRORhmUcaW1CJ1/m1vmLeoj4jKhe5SOqPYdddGH01DtluLLJKVPcGxku4AzPLqBkKz8YESumCDIN65G7skbr37akrm4U6DNryuG9ziDrgN06cLBQ+ggHsk7poLeI/hfhrneNF+gyep/7/rzQXlopykPGWJeDeeJpN0miXz0WKWpIvpfMTYHIpZSpmfgf4OyZuFfzTnjvDW7EDQdLyQAlpIW79XyM/hoPrag/wA/oaQHmVH2dICiyFW7dr9JTtuN2HMo2knxRXk3YOmor8onhfBz+S/r/YZWT8vYGNhWkU/oa0D7x/pF3svRAQAAA==" />
+<input type="hidden" name="lang" value="frf" />
+<input type="hidden" name="suite" value="pearl" />
+<input type="hidden" name="reservedids" value="inst,lang,suite" />
+<input type="hidden" name="submitmode" value="" />
+<input type="hidden" name="submitname" value="" />
+<input type="hidden" name="If_5" value="F" />
+<input type="hidden" name="If_7" value="F" />
+<input type="hidden" name="If_9" value="T" />
+</div>
+
+			<span class="searchText customHeader">
+                
+                
+                    <label for="searchString">Rechercher :</label>
+                
+            </span>
+
+            <span class="searchContent">
+                <div class="searchInput">
+                    <!-- <div jwcid="autoCompleteIfComponent">  -->
+                    
+                    
+
+                        <input type="text" name="searchString" value="horde du contrevent" id="searchString" onfocus="this.select();" size="40" tabindex="0" />
+
+                    
+                </div>
+				
+				<div id="advancedSearchLinkAnyComponent">
+				    
+                        <div class="advSearch">
+                            <a id="advancedSearchLinkComponent" async="true" onclick="redirectToAdvancedSearch('https://opac.si.leschampslibres.fr:443/iii/encore/home?lang=frf&amp;suite=pearl&amp;advancedSearch=true'); return false;" updateComponents="$GenericLink_19@db5f3ee1[SearchResultsPage/queryComponent.advancedSearchLinkComponent]" href="javascript:;">
+                                Recherche avancée
+                            </a>
+                        </div>
+                    
+                </div>
+			</span>
+
+            <span class="searchSubmit">
+				<input type="image" name="searchImageSumbitComponent" src="resources/gold/images/go_button.png" id="searchImageSumbitComponent" tabindex="0" onclick="return setPreviousSearchTerm()" alt="Rechercher" width="40" height="40" />
+			</span>
+		</form>
+
+        
+	</div>
+
+	<script type="text/javascript">
+        var previousSearchTerm = '';
+
+        function setPreviousSearchTerm() {
+            var flag = false,
+                element = document.getElementById('searchString'),
+			    searchText;
+
+            if ( !element ) {
+                return flag;
+            }
+
+            searchText = element.value.trim();
+
+            if( searchText !== '' && previousSearchTerm.trim() === searchText ) {
+                flag = false;
+            } else {
+                flag = true;
+            }
+
+            previousSearchTerm = searchText;
+
+            return flag;
+        }
+
+        tapestry.addOnLoad(function(e) {
+        	jQuery(document).trigger('iii:autocomplete:customise:start');
+		});
+
+        if(document.getElementById('searchString')) {
+
+			document.getElementById('searchString').focus();
+
+        } else if(document.getElementById('targetAuto')) {
+
+            document.getElementById('targetAuto').focus();
+
+        }
+    </script>
+
+
+            
+        
+    
+                    
+
+                    <div id="contentColumn">
+                        
+    <div class="validationError">
+        <ul class="errorList">
+            
+        </ul>
+    </div>
+
+                        
+        
+	<div class="contentCategories">
+		
+		
+			
+            
+               
+                    
+                        <span id="selectedCategory" style="display:none;visibility:hidden;">
+                            <span style="display:none;visibility:hidden;" class="contentCategory content-Catalog" id="currentContentCategoryInsert6Component">Catalogue</span>
+                        </span>
+                    
+               
+            
+        
+	</div>
+
+
+        <div class="encore-results-layout" id="searchResultsAnyComponent">
+            
+    <div class="resultsSummary encore-summary">
+        
+    <div class="browseHeader customHeader encore-search-result-summary">
+        <span class="noResultsHideMessage">
+           
+             Résultats
+             1 - 11 sur  11
+           
+        </span>
+        
+        pour
+        
+            <span id="el-2ab79cdf-ff12-4ee0-8d45-81f015267b0a" dir="LTR" class="baseDirectionInsertComponent"><span class="searchTerm">horde du contrevent</span></span>
+        
+       
+    </div>
+
+        <div class="encore-summary__row encore-summary__row_align_right">
+            
+<div class="consortiaSearchComponent">
+	
+</div>
+
+
+            
+    
+
+        </div>
+    </div>
+
+    <div class="resultsView">
+        
+    <span class="sortSelector">
+        Triés par&nbsp;
+        
+            
+            
+            
+                pertinence
+            
+        
+            
+                <span class="sortBar">|</span>
+            
+            
+                <a id="currentSortOptionLinkComponent" href="/iii/encore/search/C__Shorde%20du%20contrevent__O-date__U__X0;jsessionid=0?lang=frf&amp;suite=pearl">
+                   <span class="currentSort">
+                        date</span></a>
+            
+            
+        
+            
+                <span class="sortBar">|</span>
+            
+            
+                <a id="currentSortOptionLinkComponent_0" href="/iii/encore/search/C__Shorde%20du%20contrevent__Otitle__U__X0;jsessionid=0?lang=frf&amp;suite=pearl">
+                   <span class="currentSort">
+                        titre</span></a>
+            
+            
+        
+            
+                <span class="sortBar">|</span>
+            
+            
+                <a id="currentSortOptionLinkComponent_1" href="/iii/encore/search/C__Shorde%20du%20contrevent__Oauthor__U__X0;jsessionid=0?lang=frf&amp;suite=pearl">
+                   <span class="currentSort">
+                        Auteur</span></a>
+            
+            
+        
+    </span>
+
+    </div>
+
+    <div id="leftColumn" class="encore-left-column encore-results-layout__left-column">
+        <div id="facetsSearchPageArea" class="encore-facets-search-page-area">
+            
+    <section id="facetgroupsarea" role="list" aria-describedby="facet-area-description" tabindex="0">
+        <h2 id="facet-area-description" class="encore-screen-reader-only">Selecting or deselecting a search filter will reload your page.</h2>
+
+        <div class="fieldsFacets">
+            <div class="loading" id="facetGroupIdAnyComponent">
+
+                
+                <span class="loading">
+                    <section class="encore-left-column__facet-groups-loading-section">
+                        
+
+    <h2 class="sectionHeader facetHeader">
+        Préciser par :
+    </h2>
+
+    Chargement des facettes...
+
+
+                    </section>
+                </span>
+
+            </div>
+        </div>
+    </section>
+
+        </div>
+        <div class="encore-left-column_padding">
+            
+
+            
+               
+        
+    
+
+    
+            
+               
+            
+               
+            
+               
+            
+               
+            
+
+            
+    <div id="relatedSearchesTitle" class="sectionHeader relatedSearchesHeader customHeader">
+        Rechercher sur des mots proches ou en lien :
+    </div>
+     
+   <div id="expandTagCloudColumn">
+        
+         
+            
+        <div id="expandTagCloudAnyComponent">
+             
+            <div class="expandTags">
+                
+                <span class="loading">
+                    Charger les étiquettes...
+                </span>
+            </div>
+        </div>
+
+        
+   </div>
+ 
+        </div>
+    </div>
+
+    <div id="mainContentArea">
+    
+        
+
+            <span id="resultsAnyComponent">
+
+                
+                    
+	<!--  start item -->
+	<!-- Browse Result Program -->
+	
+
+	<!-- Browse Result Bib -->
+	
+		 
+    <!-- browse bib -->
+    
+
+        <!-- browse bib record -->
+        <div id="resultRecord-b2214270" class="gridBrowseContent2 search-result-item searchResult">
+
+            <div class="gridBrowseCol2 search-result-item__info">
+                
+
+                <!--title-->
+                <div class="dpBibTitle">
+                    <!-- please read c1063106, c1063117, c1044421, c1060576a before changing title -->
+                    
+                        
+                            <span class="title">
+                                <a id="recordDisplayLink2Component" href="/iii/encore/record/C__Rb2214270__Shorde%20du%20contrevent__Orightresult__U__X6;jsessionid=0?lang=frf&amp;suite=pearl">
+                                    La horde du contrevent / Alain Damasio
+                                </a>
+                            </span>
+                        
+
+                        <!--This block of code seems to be unreachable and should be investigated-->
+                        
+                    
+
+                    
+
+                    
+
+                    <div class="dpBibAuthor">
+                        
+                            <!-- author -->
+                            <a id="authorDisplayLinkComponent" href="/iii/encore/search/C__SDamasio%20Alain__Orightresult;jsessionid=0?lang=frf&amp;suite=pearl">
+                                Damasio, Alain  (1969-....)
+                            </a>
+                        
+
+                        
+                    </div>
+
+                    <!-- MARC 962 Media -->
+                    <div class="recordDetailValue">
+                        
+                            <img alt="" id="el-d269f4e6-4883-44eb-9738-ba5573904a85" src="https://opac.si.leschampslibres.fr/iii/encore/resources/gold/images/materialtype/encore5_book.png" class="itemMediaIcon"></img>
+                        
+
+                        <span class="itemMediaDescription" id="mediaTypeInsertComponent">Texte imprimé</span>
+
+                        
+
+                        
+                            <span class="pipeDivider">|</span>
+                            <span class="itemMediaYear" id="searchResultPubYearInsertComponent">2024</span>
+                        
+
+                        
+                    </div>
+
+                    <!-- holdings -->
+                    
+                    
+
+                        <!-- bibHoldingsComponentAvailableOnlyOrAllItems -->
+                        
+    <!--start item info-->
+    
+
+    
+        <!-- over threshold holdings info -->
+        
+	
+
+
+        <!--ERM-->
+        
+    
+    <!-- Dialog content -->
+    
+
+
+        <!-- checkin info -->
+        
+	
+
+
+        <!-- Volume info -->
+        
+
+        <!-- Item info -->
+        
+            
+
+                <!--This ItemsContainer elem does not get rendered into a toggle on the record page - only the browse -->
+                <div id="ItemsContainer-b2214270" class="ItemsContainer">
+                    
+                        
+
+    
+        <div class="availabilitySummaryArea">
+            
+                <div class="dpBibHoldingStatement">
+                    <span class="availabilityMessage">
+                        <span class="itemsNotAvailable">Emprunté</span> à Les Champs Libres Langues & littératures - 4ème étage (RETOUR 20-10-26)
+                    </span>
+                    
+                        <span class="itemsContainerPopUpTrigger"></span>
+                    
+                </div>
+            
+        </div>
+    
+    
+
+    
+
+                    
+
+                    <div class="content bibHoldingsWrapper popUpWrapper">
+                        <a href="javascript:void(0);" onclick="toggleBibHoldingsPopup(this, true)" class="closeLink">
+                            fermer
+                        </a>
+
+                        <!-- available-->
+                        
+
+                        <!--all -->
+                        
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAllToggleLink availCheckboxLink">
+                                <img alt="The checkbox checked." width="15" src="resources/gold/images/checkbox_checked.png" class="availCheckbox" height="13" id="checkboxCheckedImageComponent"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAvailableToggleLink availCheckboxLink">
+                                <img alt="The checkbox unchecked." width="15" id="el-3122f6ba-459a-423f-9104-73ab81a3070e" src="resources/gold/images/checkbox.png" class="availCheckbox" height="13"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAllMaxToggleLink availCheckboxLink">
+                                <img alt="The checkbox checked." width="15" src="resources/gold/images/checkbox_checked.png" class="availCheckbox" height="13" id="checkboxCheckedImage2Component"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAvailableMaxToggleLink availCheckboxLink">
+                                <img alt="The checkbox unchecked." width="15" id="el-ae83eb7b-2492-4fd6-b1a6-1928485d0ac2" src="resources/gold/images/checkbox.png" class="availCheckbox" height="13"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <div class="allItemsSection">
+                               
+
+    
+    
+
+        
+        
+
+            <!--link moved into dpBibHoldingStatement via initBibHoldingsToggle JS -->
+            <span class="itemsSectionHeader" id="availHeaderWrapperAny2Component">
+                <a href="javascript:void(0);" onclick="toggleBibHoldingsPopup(this)">
+                    Tout voir
+                </a>
+            </span>
+
+        
+
+        <!-- start mark -->
+        <h3 class="sectionHeader itemsHeader customHeader">
+            Exemplaires
+        </h3>
+
+        <div id="allitems-b2214270">
+
+            
+
+                
+
+                    <div class="itemTableWrapper popUpContentWrapper">
+                        
+
+    
+
+    
+        <table class="itemTable" cellspacing="3">
+            <tr>
+                
+                    <th>
+                        Localisation
+                    </th>
+                
+                    <th>
+                        Cote
+                    </th>
+                
+                    <th>
+                        Statut
+                    </th>
+                
+                    <th>
+                        CONDITION PRET
+                    </th>
+                
+            </tr>
+            
+                <tr>
+                    
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                    
+                                        
+                                            
+ 
+	
+    	
+	
+		
+	<a id="el-eec45a7b-9d67-4bf2-89b8-9dfbe8f1b91e" href="" onclick="popupLocationFunction('necx4' , 'frf');return false">
+	    	Les Champs Libres Langues & littératures - 4ème étage
+	    </a>
+    
+    
+
+     
+	
+ 
+
+
+                                        
+                                        
+                                    
+                                
+                            </td>
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                    
+                                        
+                                        
+                                            
+                                                
+                                                
+                                                    <span id="cn-i3744641-allitems-b2214270" class="cn-i3744641">
+                                                        <a id="callNoBrowseDirectLinkComponent" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.$BibHoldingsComponent.bibHoldingsAllItems.itemTableComponent.callNoBrowseDirectLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Si3744641&amp;sp=Sb2214270&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'callNoBrowseDirectLinkComponent', false)">
+                                                            SF DAM
+                                                        </a>
+                                                    </span>
+                                                
+                                            
+                                            
+                                        
+                                    
+                                
+                                    
+                                         
+                                    
+                                    
+                                
+                                    
+                                         
+                                    
+                                    
+                                
+                            </td>
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                        RETOUR 20-10-26
+                                    
+                                    
+                                
+                            </td>
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                        .
+                                    
+                                    
+                                
+                            </td>
+                        
+                    
+                </tr>
+            
+        </table>
+    
+
+
+                        
+                        
+
+                            
+
+                        
+  
+                        <form method="post" action="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.$BibHoldingsComponent.bibHoldingsAllItems.countComponent.sdirect;jsessionid=0" id="countComponent" style="display:none;">
+<div style="display:none;" id="countComponenthidden"><input type="hidden" name="formids" value="allCountInsertComponent,allAvailCountInsertComponent" />
+<input type="hidden" name="seedids" value="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" />
+<input type="hidden" name="lang" value="frf" />
+<input type="hidden" name="suite" value="pearl" />
+<input type="hidden" name="reservedids" value="inst,lang,suite" />
+<input type="hidden" name="submitmode" value="" />
+<input type="hidden" name="submitname" value="" />
+<input type="hidden" name="allCountInsertComponent" id="allCountInsertComponent" value="5" />
+<input type="hidden" name="allAvailCountInsertComponent" id="allAvailCountInsertComponent" value="5" />
+</div>
+                            
+                            
+                        </form>
+                    </div>
+
+                
+                
+
+            
+            
+
+        </div>
+        <!-- end mark -->
+    
+
+                            </div>
+                        
+
+                        
+
+                        
+                            
+                        <div class="showMoreLessLinkContainer">&nbsp;</div>
+                            
+                        <img alt="" src="resources/gold/images/dropShadowUpArrow.png" class="dropShadowUpArrow" id="dialogUpArrowImageAnyComponent"></img>
+                    </div>
+                </div>
+
+                
+
+            
+            
+    	
+
+        <!-- Order info -->
+        
+   
+
+
+
+                    
+
+                    <!-- ebook availability -->
+                    
+    
+    
+
+
+                    <!-- catalog coins -->
+                    
+    
+        <span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rfr_id=info%3Asid%2Fiii.com%3Aencore&amp;rft.btitle=La+horde+du+contrevent+%2F+Alain+Damasio&amp;rft.isbn=9782370492227&amp;rft.au=Damasio%2C+Alain++%281969-....%29&amp;rft.date=2024&amp;rft_id=https%3A%2F%2Fopac.si.leschampslibres.fr%2Fiii%2Fencore%2Frecord%2FC__Rb2214270__Shorde%2520du%2520contrevent__Orightresult__U__X6%3Bjsessionid%3D95DB948434D9584CC4FB7A08DC0C0997%3Flang%3Dfrf%26suite%3Dpearl" class="Z3988" id="coinsAnyComponent"></span>
+    
+
+
+                    <!-- ratingReviewsSummaryComponent -->
+                    
+                        
+    <div id="ratingsUpdate-b2214270" class="ratingReviewsSummary">
+        <!--  <span jwcid="visibleIfComponent"> -->
+        <div class="ratingReviewsSummaryContentWrapper" id="ratingReviewsSummaryContentWrapperAnyComponent">
+            
+
+    
+
+    
+
+
+            <!-- info about reviews -->
+            
+            
+
+                <div class="reviews noReviewsLink">
+                    
+    
+
+                </div>
+
+            
+        </div>
+
+        
+        <!-- </span> -->
+    </div>
+
+                    
+
+                    <div class="addtlInfo">
+                        
+
+                        
+
+                        
+    
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="gridBrowseCol1 search-result-item__action">
+                <div id="actionsUpdate-b2214270">
+
+                    <div class="search-result-item__action-column">
+
+                        <div class="citationButtons search-result-item__buttons-group">
+                            
+
+    <div id="el-41d7ea89-7aed-4272-bc3d-2b89f8d42114" class="requestLink">
+
+        
+
+        <!-- request types -->
+        
+            <div id="el-7e3fa1be-e5d4-4899-869f-c78401a232b0" class="Request">
+                <!-- overdrive -->
+                
+
+                <!-- axis 360 -->
+                
+
+                <!-- general -->
+                
+                	
+    
+    
+
+        
+        
+
+            
+
+                <div class="requestButton">
+                   <a id="genericLink" class="button secondaryAction search-result-item__button" href="/iii/encore/search/C__Shorde%20du%20contrevent__Orightresult__U/Sdologin?lang=frf&amp;ivts=%2FK1oZyaVM6%2FL8l6xeuuW0g%3D%3D&amp;casts=xTea0yBHeFtfaTZriA097A%3D%3D&amp;loginReason=doRequest&amp;actionRecordId=b2214270">
+                       <img alt="" id="el-6a4bcfee-df9c-4cb4-a387-d4dd1779019f" src="resources/gold/images/hold.png"></img>
+                       Réserver ce document
+                   </a>
+                </div>
+
+            
+            
+
+        
+    
+
+                
+
+                <!-- popup -->
+                
+                <!-- popup -->
+            </div>
+        
+
+    </div>
+
+
+                        </div>
+
+                        
+
+    <div class="addtlActions search-result-item__actions-group">
+        <!-- record actions catalog -->
+        <p>
+            Plus d'actions
+        </p>
+
+        <ul class="inline-list initialActions">
+            
+
+            <li>
+                
+    
+        <span id="bookCartOperationAnyComponentb2214270">
+
+            
+            
+
+                <a id="addToBookCartLinkComponent" onMouseup="renewSession()" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.recordActionsComponent.bookCartOperationComponent.addToBookCartLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Sb2214270&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'addToBookCartLinkComponent', false)">
+                    <img alt="Ajouter au panier" width="22" title="Ajouter au panier" src="resources/gold/images/bookcart.png" class="actionIcon search-result-item__action-icon" height="20" id="addToBookcartImageAnyComponent"></img>
+                </a>
+
+            
+
+        </span>
+    
+
+            </li>
+
+            <li>
+                
+
+    <a id="emailLinkComponent" onMouseup="renewSession()" class="toolbarItem popInDialogTrigger" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.recordActionsComponent.emailComponent.emailLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Sb2214270&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'emailLinkComponent', false)">
+        <img alt="Courriel" width="19" title="Courriel" src="resources/gold/images/email.png" class="actionIcon search-result-item__action-icon" height="13" id="emailImageAnyComponent"></img>
+
+        
+    </a>
+
+    <!--confirmation dialog-->
+    
+
+    <div class="emailMessageContainer">
+        <div class="sentStatus">
+            <div class="emailStatusMessage" id="statusMessageAny">
+                
+            </div>
+        </div>
+    </div>
+
+            </li>
+
+            
+                 <li>
+                     
+	
+
+                 </li>
+
+                 <li>
+                     
+    
+
+                 </li>
+            
+
+            
+                <li>
+                    <a href="javascript:void(0);" class="popUpTrigger moreActionsLink"
+                       onclick="toggleBibHoldingsPopup(this, false, 'moreActionsWrapper','gridBrowseCol1')">
+                        <img src="resources/gold/images/more.png" alt="Plus d'options" width="13" id="el-c2b7cea8-f751-43a1-aa55-516b676269b9" title="Plus d'options" class="actionIcon search-result-item__action-icon" height="13"></img>
+                    </a>
+                </li>
+            
+        </ul>
+
+        <!-- more popup -->
+        <div class="moreActionsWrapper popUpWrapper more-actions-popup">
+            <a class="closeLink"
+               onclick="toggleBibHoldingsPopup(this, true, 'moreActionsWrapper','gridBrowseCol1')" href="javascript:void(0);">
+                fermer
+            </a>
+
+            <h3 class="moreActionsHeader more-actions-popup__header">
+                plus
+            </h3>
+
+            <ul class="inline-list moreActions more-actions-popup__content">
+                <li class="more-actions-popup__action">
+                    
+    
+	    
+	    
+	        <a id="el-42864202-9dae-4f05-91ce-2181e39a52ce" href="/iii/encore/search/C__Shorde%20du%20contrevent__Orightresult__U/Sdologin?lang=frf&amp;ivts=%2FK1oZyaVM6%2FL8l6xeuuW0g%3D%3D&amp;casts=xTea0yBHeFtfaTZriA097A%3D%3D&amp;loginReason=doTag&amp;actionRecordId=b2214270">
+	            <img alt="Proposer un mot-clé" width="20" title="Proposer un mot-clé" src="resources/gold/images/tag.png" class="actionIcon search-result-item__action-icon" height="19" id="createCommunityTagsIconImageAny2Component"></img>
+	        </a>
+	    
+    
+
+                </li>
+
+                
+
+                
+
+                
+            </ul>
+
+            <img alt="" id="el-8c0d680e-ab32-46b2-a55a-4560bf017bd7" src="resources/gold/images/dropShadowArrow.png" class="dropShadowArrow"></img>
+        </div>
+
+    </div>
+
+
+
+                    </div>
+
+                    
+    <span id="anyWrapperComponent">
+        
+    </span>
+
+
+                </div>
+            </div>
+
+            <div class="bibLocations">
+                
+                    .
+                
+                
+            </div>
+
+        </div>
+    
+
+	
+
+	<!-- Browse Result Resource -->
+	
+
+	<!-- Browse Result External -->
+	
+	<!-- end item -->
+
+
+                    
+                
+                    
+	<!--  start item -->
+	<!-- Browse Result Program -->
+	
+
+	<!-- Browse Result Bib -->
+	
+		 
+    <!-- browse bib -->
+    
+
+        <!-- browse bib record -->
+        <div id="resultRecord-b1943448" class="gridBrowseContent2 search-result-item searchResult">
+
+            <div class="gridBrowseCol2 search-result-item__info">
+                
+
+                <!--title-->
+                <div class="dpBibTitle">
+                    <!-- please read c1063106, c1063117, c1044421, c1060576a before changing title -->
+                    
+                        
+                            <span class="title">
+                                <a id="recordDisplayLink2Component_0" href="/iii/encore/record/C__Rb1943448__Shorde%20du%20contrevent__P0%2C1__Orightresult__U__X6;jsessionid=0?lang=frf&amp;suite=pearl">
+                                    La horde du Contrevent  [Texte imprimé] / Alain Damasio
+                                </a>
+                            </span>
+                        
+
+                        <!--This block of code seems to be unreachable and should be investigated-->
+                        
+                    
+
+                    
+
+                    
+
+                    <div class="dpBibAuthor">
+                        
+                            <!-- author -->
+                            <a id="authorDisplayLinkComponent_0" href="/iii/encore/search/C__SDamasio%20Alain__Orightresult;jsessionid=0?lang=frf&amp;suite=pearl">
+                                Damasio, Alain  (1969-....)
+                            </a>
+                        
+
+                        
+                    </div>
+
+                    <!-- MARC 962 Media -->
+                    <div class="recordDetailValue">
+                        
+                            <img alt="" id="el-63e9fb02-ac0d-40e9-a3f2-cf24e2697101" src="https://opac.si.leschampslibres.fr/iii/encore/resources/gold/images/materialtype/encore5_book.png" class="itemMediaIcon"></img>
+                        
+
+                        <span class="itemMediaDescription" id="mediaTypeInsertComponent_0">Texte imprimé</span>
+
+                        
+
+                        
+                            <span class="pipeDivider">|</span>
+                            <span class="itemMediaYear" id="searchResultPubYearInsertComponent_0">impr. 2007</span>
+                        
+
+                        
+                    </div>
+
+                    <!-- holdings -->
+                    
+                    
+
+                        <!-- bibHoldingsComponentAvailableOnlyOrAllItems -->
+                        
+    <!--start item info-->
+    
+
+    
+        <!-- over threshold holdings info -->
+        
+	
+
+
+        <!--ERM-->
+        
+    
+    <!-- Dialog content -->
+    
+
+
+        <!-- checkin info -->
+        
+	
+
+
+        <!-- Volume info -->
+        
+
+        <!-- Item info -->
+        
+            
+            
+
+                
+                    
+
+    
+    
+        <span class="itemsContainerPopUpTrigger"></span>
+    
+
+    
+
+                
+
+            
+    	
+
+        <!-- Order info -->
+        
+   
+
+
+
+                    
+
+                    <!-- ebook availability -->
+                    
+    
+    
+
+
+                    <!-- catalog coins -->
+                    
+    
+        <span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rfr_id=info%3Asid%2Fiii.com%3Aencore&amp;rft.btitle=La+horde+du+Contrevent++%5BTexte+imprim%C3%A9%5D+%2F+Alain+Damasio&amp;rft.isbn=9782070342266&amp;rft.au=Damasio%2C+Alain++%281969-....%29&amp;rft.date=impr.+2007&amp;rft_id=https%3A%2F%2Fopac.si.leschampslibres.fr%2Fiii%2Fencore%2Frecord%2FC__Rb1943448__Shorde%2520du%2520contrevent__P0%252C1__Orightresult__U__X6%3Bjsessionid%3D95DB948434D9584CC4FB7A08DC0C0997%3Flang%3Dfrf%26suite%3Dpearl" class="Z3988" id="coinsAnyComponent_0"></span>
+    
+
+
+                    <!-- ratingReviewsSummaryComponent -->
+                    
+                        
+    <div id="ratingsUpdate-b1943448" class="ratingReviewsSummary">
+        <!--  <span jwcid="visibleIfComponent"> -->
+        <div class="ratingReviewsSummaryContentWrapper" id="ratingReviewsSummaryContentWrapperAnyComponent_0">
+            
+
+    
+
+    
+
+
+            <!-- info about reviews -->
+            
+            
+
+                <div class="reviews noReviewsLink">
+                    
+    
+
+                </div>
+
+            
+        </div>
+
+        
+        <!-- </span> -->
+    </div>
+
+                    
+
+                    <div class="addtlInfo">
+                        
+
+                        
+
+                        
+    
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="gridBrowseCol1 search-result-item__action">
+                <div id="actionsUpdate-b1943448">
+
+                    <div class="search-result-item__action-column">
+
+                        <div class="citationButtons search-result-item__buttons-group">
+                            
+
+    <div id="el-e8040a90-192a-4bc5-9cda-fa1ed6bdd36b" class="requestLink">
+
+        
+
+        <!-- request types -->
+        
+
+    </div>
+
+
+                        </div>
+
+                        
+
+    <div class="addtlActions search-result-item__actions-group">
+        <!-- record actions catalog -->
+        <p>
+            Plus d'actions
+        </p>
+
+        <ul class="inline-list initialActions">
+            
+
+            <li>
+                
+    
+        <span id="bookCartOperationAnyComponentb1943448">
+
+            
+            
+
+                <a id="addToBookCartLinkComponent_0" onMouseup="renewSession()" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.recordActionsComponent.bookCartOperationComponent.addToBookCartLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Sb1943448&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'addToBookCartLinkComponent_0', false)">
+                    <img alt="Ajouter au panier" width="22" title="Ajouter au panier" src="resources/gold/images/bookcart.png" class="actionIcon search-result-item__action-icon" height="20" id="addToBookcartImageAnyComponent_0"></img>
+                </a>
+
+            
+
+        </span>
+    
+
+            </li>
+
+            <li>
+                
+
+    <a id="emailLinkComponent_0" onMouseup="renewSession()" class="toolbarItem popInDialogTrigger" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.recordActionsComponent.emailComponent.emailLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Sb1943448&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'emailLinkComponent_0', false)">
+        <img alt="Courriel" width="19" title="Courriel" src="resources/gold/images/email.png" class="actionIcon search-result-item__action-icon" height="13" id="emailImageAnyComponent_0"></img>
+
+        
+    </a>
+
+    <!--confirmation dialog-->
+    
+
+    <div class="emailMessageContainer">
+        <div class="sentStatus">
+            <div class="emailStatusMessage" id="statusMessageAny_0">
+                
+            </div>
+        </div>
+    </div>
+
+            </li>
+
+            
+                 <li>
+                     
+	
+
+                 </li>
+
+                 <li>
+                     
+    
+
+                 </li>
+            
+
+            
+                <li>
+                    <a href="javascript:void(0);" class="popUpTrigger moreActionsLink"
+                       onclick="toggleBibHoldingsPopup(this, false, 'moreActionsWrapper','gridBrowseCol1')">
+                        <img src="resources/gold/images/more.png" alt="Plus d'options" width="13" id="el-9c6039aa-8cdd-4d09-a94f-aa6d2c1e4736" title="Plus d'options" class="actionIcon search-result-item__action-icon" height="13"></img>
+                    </a>
+                </li>
+            
+        </ul>
+
+        <!-- more popup -->
+        <div class="moreActionsWrapper popUpWrapper more-actions-popup">
+            <a class="closeLink"
+               onclick="toggleBibHoldingsPopup(this, true, 'moreActionsWrapper','gridBrowseCol1')" href="javascript:void(0);">
+                fermer
+            </a>
+
+            <h3 class="moreActionsHeader more-actions-popup__header">
+                plus
+            </h3>
+
+            <ul class="inline-list moreActions more-actions-popup__content">
+                <li class="more-actions-popup__action">
+                    
+    
+	    
+	    
+	        <a id="el-82dc5f92-cc08-429e-813b-d7f807cd39b2" href="/iii/encore/search/C__Shorde%20du%20contrevent__Orightresult__U/Sdologin?lang=frf&amp;ivts=%2FK1oZyaVM6%2FL8l6xeuuW0g%3D%3D&amp;casts=xTea0yBHeFtfaTZriA097A%3D%3D&amp;loginReason=doTag&amp;actionRecordId=b1943448">
+	            <img alt="Proposer un mot-clé" width="20" title="Proposer un mot-clé" src="resources/gold/images/tag.png" class="actionIcon search-result-item__action-icon" height="19" id="createCommunityTagsIconImageAny2Component_0"></img>
+	        </a>
+	    
+    
+
+                </li>
+
+                
+
+                
+
+                
+            </ul>
+
+            <img alt="" id="el-e1fc2cb6-c8ec-4660-a568-8bbfa9b9a3ec" src="resources/gold/images/dropShadowArrow.png" class="dropShadowArrow"></img>
+        </div>
+
+    </div>
+
+
+
+                    </div>
+
+                    
+    <span id="anyWrapperComponent_0">
+        
+    </span>
+
+
+                </div>
+            </div>
+
+            <div class="bibLocations">
+                
+                
+            </div>
+
+        </div>
+    
+
+	
+
+	<!-- Browse Result Resource -->
+	
+
+	<!-- Browse Result External -->
+	
+	<!-- end item -->
+
+
+                    
+                
+                    
+	<!--  start item -->
+	<!-- Browse Result Program -->
+	
+
+	<!-- Browse Result Bib -->
+	
+		 
+    <!-- browse bib -->
+    
+
+        <!-- browse bib record -->
+        <div id="resultRecord-b1489326" class="gridBrowseContent2 search-result-item searchResult">
+
+            <div class="gridBrowseCol2 search-result-item__info">
+                
+
+                <!--title-->
+                <div class="dpBibTitle">
+                    <!-- please read c1063106, c1063117, c1044421, c1060576a before changing title -->
+                    
+                        
+                            <span class="title">
+                                <a id="recordDisplayLink2Component_1" href="/iii/encore/record/C__Rb1489326__Shorde%20du%20contrevent__P0%2C2__Orightresult__U__X6;jsessionid=0?lang=frf&amp;suite=pearl">
+                                    La horde du contrevent  [Multimédia multisupport] / Alain Damasio ; Arno Alyvan, comp. Olivia Guinebretière, Arno Alyvan, Alain Damasio... [et al.], voix, [acc. instr.]
+                                </a>
+                            </span>
+                        
+
+                        <!--This block of code seems to be unreachable and should be investigated-->
+                        
+                    
+
+                    
+
+                    
+
+                    <div class="dpBibAuthor">
+                        
+                            <!-- author -->
+                            <a id="authorDisplayLinkComponent_1" href="/iii/encore/search/C__SDamasio%20Alain__Orightresult;jsessionid=0?lang=frf&amp;suite=pearl">
+                                Damasio, Alain  (1969-....)
+                            </a>
+                        
+
+                        
+                    </div>
+
+                    <!-- MARC 962 Media -->
+                    <div class="recordDetailValue">
+                        
+                            <img alt="" id="el-6ce276d5-9ef6-4e25-82a5-490e4b1bfd74" src="https://opac.si.leschampslibres.fr/iii/encore/resources/gold/images/materialtype/encore5_book.png" class="itemMediaIcon"></img>
+                        
+
+                        <span class="itemMediaDescription" id="mediaTypeInsertComponent_1">Texte imprimé</span>
+
+                        
+
+                        
+                            <span class="pipeDivider">|</span>
+                            <span class="itemMediaYear" id="searchResultPubYearInsertComponent_1">impr. 2004</span>
+                        
+
+                        
+                    </div>
+
+                    <!-- holdings -->
+                    
+                    
+
+                        <!-- bibHoldingsComponentAvailableOnlyOrAllItems -->
+                        
+    <!--start item info-->
+    
+
+    
+        <!-- over threshold holdings info -->
+        
+	
+
+
+        <!--ERM-->
+        
+    
+    <!-- Dialog content -->
+    
+
+
+        <!-- checkin info -->
+        
+	
+
+
+        <!-- Volume info -->
+        
+
+        <!-- Item info -->
+        
+            
+
+                <!--This ItemsContainer elem does not get rendered into a toggle on the record page - only the browse -->
+                <div id="ItemsContainer-b1489326" class="ItemsContainer">
+                    
+                        
+
+    
+        <div class="availabilitySummaryArea">
+            
+                <div class="dpBibHoldingStatement">
+                    <span class="availabilityMessage">
+                        <span class="itemsNotAvailable">Emprunté</span> à Les Champs Libres Langues & littératures - 4ème étage (RETOUR 30-10-26)
+                    </span>
+                    
+                        <span class="itemsContainerPopUpTrigger"></span>
+                    
+                </div>
+            
+        </div>
+    
+    
+
+    
+
+                    
+
+                    <div class="content bibHoldingsWrapper popUpWrapper">
+                        <a href="javascript:void(0);" onclick="toggleBibHoldingsPopup(this, true)" class="closeLink">
+                            fermer
+                        </a>
+
+                        <!-- available-->
+                        
+
+                        <!--all -->
+                        
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAllToggleLink availCheckboxLink">
+                                <img alt="The checkbox checked." width="15" src="resources/gold/images/checkbox_checked.png" class="availCheckbox" height="13" id="checkboxCheckedImageComponent_0"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAvailableToggleLink availCheckboxLink">
+                                <img alt="The checkbox unchecked." width="15" id="el-fa78750a-c153-4654-a846-5035f61cc47e" src="resources/gold/images/checkbox.png" class="availCheckbox" height="13"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAllMaxToggleLink availCheckboxLink">
+                                <img alt="The checkbox checked." width="15" src="resources/gold/images/checkbox_checked.png" class="availCheckbox" height="13" id="checkboxCheckedImage2Component_0"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <a href="javascript:void(0);" onclick="showHideItemsToggle(this)" class="showAvailableMaxToggleLink availCheckboxLink">
+                                <img alt="The checkbox unchecked." width="15" id="el-20ca7408-2264-471b-8bc0-1cd56a4b26ea" src="resources/gold/images/checkbox.png" class="availCheckbox" height="13"></img>
+                                Cocher pour restreindre aux documents disponibles
+                            </a>
+
+                            <div class="allItemsSection">
+                               
+
+    
+    
+
+        
+        
+
+            <!--link moved into dpBibHoldingStatement via initBibHoldingsToggle JS -->
+            <span class="itemsSectionHeader" id="availHeaderWrapperAny2Component_0">
+                <a href="javascript:void(0);" onclick="toggleBibHoldingsPopup(this)">
+                    Tout voir
+                </a>
+            </span>
+
+        
+
+        <!-- start mark -->
+        <h3 class="sectionHeader itemsHeader customHeader">
+            Exemplaires
+        </h3>
+
+        <div id="allitems-b1489326">
+
+            
+
+                
+
+                    <div class="itemTableWrapper popUpContentWrapper">
+                        
+
+    
+
+    
+        <table class="itemTable" cellspacing="3">
+            <tr>
+                
+                    <th>
+                        Localisation
+                    </th>
+                
+                    <th>
+                        Cote
+                    </th>
+                
+                    <th>
+                        Statut
+                    </th>
+                
+                    <th>
+                        CONDITION PRET
+                    </th>
+                
+            </tr>
+            
+                <tr>
+                    
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                    
+                                        
+                                            
+ 
+	
+    	
+	
+		
+	<a id="el-d51ccc11-0b66-47cc-96ed-90204bbf69af" href="" onclick="popupLocationFunction('necx4' , 'frf');return false">
+	    	Les Champs Libres Langues & littératures - 4ème étage
+	    </a>
+    
+    
+
+     
+	
+ 
+
+
+                                        
+                                        
+                                    
+                                
+                            </td>
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                    
+                                        
+                                        
+                                            
+                                                
+                                                
+                                                    <span id="cn-i2285426-allitems-b1489326" class="cn-i2285426">
+                                                        <a id="callNoBrowseDirectLinkComponent_0" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.$BibHoldingsComponent.bibHoldingsAllItems.itemTableComponent.callNoBrowseDirectLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Si2285426&amp;sp=Sb1489326&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'callNoBrowseDirectLinkComponent_0', false)">
+                                                            SF DAM
+                                                        </a>
+                                                    </span>
+                                                
+                                            
+                                            
+                                        
+                                    
+                                
+                                    
+                                         
+                                    
+                                    
+                                
+                                    
+                                         
+                                    
+                                    
+                                
+                            </td>
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                        RETOUR 30-10-26
+                                    
+                                    
+                                
+                            </td>
+                        
+                    
+                        
+                            <td>
+                                
+                                    
+                                        .
+                                    
+                                    
+                                
+                            </td>
+                        
+                    
+                </tr>
+            
+        </table>
+    
+
+
+                        
+                        
+
+                            
+
+                        
+  
+                        <form method="post" action="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.$BibHoldingsComponent.bibHoldingsAllItems.countComponent.sdirect;jsessionid=0" id="countComponent_0" style="display:none;">
+<div style="display:none;" id="countComponent_0hidden"><input type="hidden" name="formids" value="allCountInsertComponent_0,allAvailCountInsertComponent_0" />
+<input type="hidden" name="seedids" value="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" />
+<input type="hidden" name="lang" value="frf" />
+<input type="hidden" name="suite" value="pearl" />
+<input type="hidden" name="reservedids" value="inst,lang,suite" />
+<input type="hidden" name="submitmode" value="" />
+<input type="hidden" name="submitname" value="" />
+<input type="hidden" name="allCountInsertComponent_0" id="allCountInsertComponent_0" value="5" />
+<input type="hidden" name="allAvailCountInsertComponent_0" id="allAvailCountInsertComponent_0" value="5" />
+</div>
+                            
+                            
+                        </form>
+                    </div>
+
+                
+                
+
+            
+            
+
+        </div>
+        <!-- end mark -->
+    
+
+                            </div>
+                        
+
+                        
+
+                        
+                            
+                        <div class="showMoreLessLinkContainer">&nbsp;</div>
+                            
+                        <img alt="" src="resources/gold/images/dropShadowUpArrow.png" class="dropShadowUpArrow" id="dialogUpArrowImageAnyComponent_0"></img>
+                    </div>
+                </div>
+
+                
+
+            
+            
+    	
+
+        <!-- Order info -->
+        
+   
+
+
+
+                    
+
+                    <!-- ebook availability -->
+                    
+    
+    
+
+
+                    <!-- catalog coins -->
+                    
+    
+        <span title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rfr_id=info%3Asid%2Fiii.com%3Aencore&amp;rft.btitle=La+horde+du+contrevent++%5BMultim%C3%A9dia+multisupport%5D+%2F+Alain+Damasio+%3B+Arno+Alyvan%2C+comp.+Olivia+Guinebreti%C3%A8re%2C+Arno+Alyvan%2C+Alain+Damasio...+%5Bet+al.%5D%2C+voix%2C+%5Bacc.+instr.%5D&amp;rft.isbn=2952221707&amp;rft.au=Damasio%2C+Alain++%281969-....%29&amp;rft.date=impr.+2004&amp;rft_id=https%3A%2F%2Fopac.si.leschampslibres.fr%2Fiii%2Fencore%2Frecord%2FC__Rb1489326__Shorde%2520du%2520contrevent__P0%252C2__Orightresult__U__X6%3Bjsessionid%3D95DB948434D9584CC4FB7A08DC0C0997%3Flang%3Dfrf%26suite%3Dpearl" class="Z3988" id="coinsAnyComponent_1"></span>
+    
+
+
+                    <!-- ratingReviewsSummaryComponent -->
+                    
+                        
+    <div id="ratingsUpdate-b1489326" class="ratingReviewsSummary">
+        <!--  <span jwcid="visibleIfComponent"> -->
+        <div class="ratingReviewsSummaryContentWrapper" id="ratingReviewsSummaryContentWrapperAnyComponent_1">
+            
+
+    
+
+    
+
+
+            <!-- info about reviews -->
+            
+            
+
+                <div class="reviews noReviewsLink">
+                    
+    
+
+                </div>
+
+            
+        </div>
+
+        
+        <!-- </span> -->
+    </div>
+
+                    
+
+                    <div class="addtlInfo">
+                        
+
+                        
+
+                        
+    
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="gridBrowseCol1 search-result-item__action">
+                <div id="actionsUpdate-b1489326">
+
+                    <div class="search-result-item__action-column">
+
+                        <div class="citationButtons search-result-item__buttons-group">
+                            
+
+    <div id="el-67937d45-95db-4533-968e-ad68e3dc6b39" class="requestLink">
+
+        
+
+        <!-- request types -->
+        
+            <div id="el-5e2c27b5-25cc-4e00-b512-159069fcd499" class="Request">
+                <!-- overdrive -->
+                
+
+                <!-- axis 360 -->
+                
+
+                <!-- general -->
+                
+                	
+    
+    
+
+        
+        
+
+            
+
+                <div class="requestButton">
+                   <a id="genericLink_1" class="button secondaryAction search-result-item__button" href="/iii/encore/search/C__Shorde%20du%20contrevent__Orightresult__U/Sdologin?lang=frf&amp;ivts=%2FK1oZyaVM6%2FL8l6xeuuW0g%3D%3D&amp;casts=xTea0yBHeFtfaTZriA097A%3D%3D&amp;loginReason=doRequest&amp;actionRecordId=b1489326">
+                       <img alt="" id="el-3dc1670f-ef77-4338-8764-32ef9b6a0f50" src="resources/gold/images/hold.png"></img>
+                       Réserver ce document
+                   </a>
+                </div>
+
+            
+            
+
+        
+    
+
+                
+
+                <!-- popup -->
+                
+                <!-- popup -->
+            </div>
+        
+
+    </div>
+
+
+                        </div>
+
+                        
+
+    <div class="addtlActions search-result-item__actions-group">
+        <!-- record actions catalog -->
+        <p>
+            Plus d'actions
+        </p>
+
+        <ul class="inline-list initialActions">
+            
+
+            <li>
+                
+    
+        <span id="bookCartOperationAnyComponentb1489326">
+
+            
+            
+
+                <a id="addToBookCartLinkComponent_1" onMouseup="renewSession()" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.recordActionsComponent.bookCartOperationComponent.addToBookCartLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Sb1489326&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'addToBookCartLinkComponent_1', false)">
+                    <img alt="Ajouter au panier" width="22" title="Ajouter au panier" src="resources/gold/images/bookcart.png" class="actionIcon search-result-item__action-icon" height="20" id="addToBookcartImageAnyComponent_1"></img>
+                </a>
+
+            
+
+        </span>
+    
+
+            </li>
+
+            <li>
+                
+
+    <a id="emailLinkComponent_1" onMouseup="renewSession()" class="toolbarItem popInDialogTrigger" href="/iii/encore/SearchResultsPage,searchResultsComponent.resultComponent.searchBrowseResultBibComponent.recordActionsComponent.emailComponent.emailLinkComponent.sdirect;jsessionid=0?lang=frf&amp;sp=Sb1489326&amp;suite=pearl" onclick="return tapestry.linkOnClick(this.href,'emailLinkComponent_1', false)">
+        <img alt="Courriel" width="19" title="Courriel" src="resources/gold/images/email.png" class="actionIcon search-result-item__action-icon" height="13" id="emailImageAnyComponent_1"></img>
+
+        
+    </a>
+
+    <!--confirmation dialog-->
+    
+
+    <div class="emailMessageContainer">
+        <div class="sentStatus">
+            <div class="emailStatusMessage" id="statusMessageAny_1">
+                
+            </div>
+        </div>
+    </div>
+
+            </li>
+
+            
+                 <li>
+                     
+	
+
+                 </li>
+
+                 <li>
+                     
+    
+
+                 </li>
+            
+
+            
+                <li>
+                    <a href="javascript:void(0);" class="popUpTrigger moreActionsLink"
+                       onclick="toggleBibHoldingsPopup(this, false, 'moreActionsWrapper','gridBrowseCol1')">
+                        <img src="resources/gold/images/more.png" alt="Plus d'options" width="13" id="el-165adc62-8602-449a-b988-c8e12e624334" title="Plus d'options" class="actionIcon search-result-item__action-icon" height="13"></img>
+                    </a>
+                </li>
+            
+        </ul>
+
+        <!-- more popup -->
+        <div class="moreActionsWrapper popUpWrapper more-actions-popup">
+            <a class="closeLink"
+               onclick="toggleBibHoldingsPopup(this, true, 'moreActionsWrapper','gridBrowseCol1')" href="javascript:void(0);">
+                fermer
+            </a>
+
+            <h3 class="moreActionsHeader more-actions-popup__header">
+                plus
+            </h3>
+
+            <ul class="inline-list moreActions more-actions-popup__content">
+                <li class="more-actions-popup__action">
+                    
+    
+	    
+	    
+	        <a id="el-18606ae7-aa36-405e-a2e9-aee948a86bf8" href="/iii/encore/search/C__Shorde%20du%20contrevent__Orightresult__U/Sdologin?lang=frf&amp;ivts=%2FK1oZyaVM6%2FL8l6xeuuW0g%3D%3D&amp;casts=xTea0yBHeFtfaTZriA097A%3D%3D&amp;loginReason=doTag&amp;actionRecordId=b1489326">
+	            <img alt="Proposer un mot-clé" width="20" title="Proposer un mot-clé" src="resources/gold/images/tag.png" class="actionIcon search-result-item__action-icon" height="19" id="createCommunityTagsIconImageAny2Component_1"></img>
+	        </a>
+	    
+    
+
+                </li>
+
+                
+
+                
+
+                
+            </ul>
+
+            <img alt="" id="el-e94769d1-7217-48b8-be34-aa5b6a7c4cfd" src="resources/gold/images/dropShadowArrow.png" class="dropShadowArrow"></img>
+        </div>
+
+    </div>
+
+
+
+                    </div>
+
+                    
+    <span id="anyWrapperComponent_1">
+        
+    </span>
+
+
+                </div>
+            </div>
+
+            <div class="bibLocations">
+                
+                    .
+                
+                
+            </div>
+
+        </div>
+    
+
+	
+
+	<!-- Browse Result Resource -->
+	
+
+	<!-- Browse Result External -->
+	
+	<!-- end item -->
+
+
+                    
+                        
+    <div class="articlesPreview" id="articlesPreviewAnyComponent">
+        
+
+        
+    </div>
+
+                    
+                
+                    
+	<!--  start item -->
+	<!-- Browse Result Program -->
+	
+
+	<!-- Browse Result Bib -->
+	
+		 
+    <!-- browse bib -->
+    
+
+        <!-- browse bib record -->
+        
+</body></html>

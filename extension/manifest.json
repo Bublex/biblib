@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "Biblib : ce livre est-il dans ma bibliothèque ?",
+  "short_name": "Biblib",
+  "version": "1.0.0",
+  "description": "Sur la fiche d'un livre (Amazon, Babelio…), voyez s'il est dans vos bibliothèques, s'il est disponible, et réservez-le.",
+  "homepage_url": "https://github.com/Bublex/biblib",
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Biblib",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": ["storage"],
+  "optional_host_permissions": [
+    "https://bibliotheques.paris.fr/*",
+    "https://bibliotheque.bordeaux.fr/*",
+    "https://catalogue.bm-lyon.fr/*",
+    "https://www.bmvr.marseille.fr/*",
+    "http://catalogues.toulouse.fr/*",
+    "https://bmvr.nice.fr/*",
+    "https://catalogue-bibliotheque.nantes.fr/*",
+    "https://mediatheques.montpellier3m.fr/*",
+    "https://www.mediatheques.strasbourg.eu/*",
+    "https://bm-lille.fr/*",
+    "https://opac.si.leschampslibres.fr/*",
+    "https://sbib.si.leschampslibres.fr/*",
+    "https://bm-grenoble.fr/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.fr/*",
+        "https://www.amazon.com/*",
+        "https://www.amazon.com.be/*",
+        "https://www.amazon.ca/*",
+        "https://www.amazon.co.uk/*",
+        "https://www.amazon.de/*",
+        "https://www.amazon.es/*",
+        "https://www.amazon.it/*",
+        "https://www.babelio.com/*",
+        "https://www.bedetheque.com/*",
+        "https://www.fnac.com/*",
+        "https://livre.fnac.com/*",
+        "https://www.decitre.fr/*",
+        "https://www.cultura.com/*",
+        "https://www.leslibraires.fr/*",
+        "https://www.placedeslibraires.fr/*",
+        "https://www.mollat.com/*",
+        "https://www.gibert.com/*",
+        "https://www.furet.com/*",
+        "https://www.chasse-aux-livres.fr/*",
+        "https://www.bdfugue.com/*",
+        "https://www.goodreads.com/*",
+        "https://www.senscritique.com/*",
+        "https://openlibrary.org/*"
+      ],
+      "js": ["content/extract.js", "content/ui.js", "content/main.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

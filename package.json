@@ -1,0 +1,16 @@
+{
+  "name": "biblib",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Extension Chrome : ce livre est-il disponible dans ma bibliothèque ?",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check:live": "node tools/live-check.mjs",
+    "icons": "node tools/make-icons.mjs",
+    "zip": "cd extension && zip -r ../biblib.zip . -x '.*'"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
