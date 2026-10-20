@@ -32,6 +32,7 @@
   "optional_host_permissions": [
     "https://bibliotheques.paris.fr/*",
     "https://bibliotheque.bordeaux.fr/*",
+    "https://www.mediatheque.merignac.com/*",
     "https://catalogue.bm-lyon.fr/*",
     "https://www.bmvr.marseille.fr/*",
     "http://catalogues.toulouse.fr/*",

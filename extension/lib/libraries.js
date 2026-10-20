@@ -36,6 +36,17 @@ export const LIBRARIES = [
     showGroups: true,
   },
   {
+    id: 'merignac',
+    name: 'Médiathèques de Mérignac',
+    short: 'Mérignac',
+    city: 'Mérignac',
+    connector: 'syracuse',
+    // Catalogue propre à la ville, distinct du catalogue commun de Bordeaux Métropole.
+    base: 'https://www.mediatheque.merignac.com',
+    portal: 'Default',
+    scenario: 'DEFAULT',
+  },
+  {
     id: 'lyon',
     name: 'Bibliothèque municipale de Lyon',
     short: 'Lyon',

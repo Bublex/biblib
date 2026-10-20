@@ -24,6 +24,7 @@ Pour une archive à partager : `npm run zip` produit `biblib.zip`.
 | Paris | Syracuse (Archimed) | Le 20/10/2026, le service de disponibilité de Paris renvoyait une erreur, y compris sur son propre site : la notice s'affiche, la disponibilité est marquée « à vérifier ». |
 | Bordeaux | inMedia (Bibliomondo) | Catalogue commun à la métropole, filtré sur les annexes de la ville. |
 | Bordeaux Métropole | inMedia | Toutes les communes, groupées par commune. |
+| Mérignac | Syracuse | Catalogue propre à la ville : médiathèque Michel Sainte-Marie et antennes de quartier. |
 | Lyon | inMedia | |
 | Marseille | inMedia | |
 | Nantes | inMedia | |
