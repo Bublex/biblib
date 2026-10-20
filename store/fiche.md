@@ -1,6 +1,15 @@
 # Publication sur le Chrome Web Store
 
-Tout ce qu'il faut copier-coller dans le [tableau de bord développeur](https://chrome.google.com/webstore/devconsole), onglet par onglet.
+Tout ce qu'il faut copier-coller dans le [tableau de bord développeur](https://chrome.google.com/webstore/devconsole), onglet par onglet. (Chrome interdit aux extensions et aux navigateurs automatisés d'agir sur ces pages : le formulaire se remplit à la main.)
+
+## Ordre des étapes
+
+1. **Compte** (menu de gauche) : renseigner et **valider l'adresse e-mail de contact** (un lien de confirmation est envoyé), et répondre à la déclaration « professionnel / non professionnel » (*trader*) : pour un projet personnel gratuit, « non professionnel ».
+2. **Nouvel élément** → importer `biblib.zip`.
+3. Onglet **Fiche** : textes et visuels ci-dessous.
+4. Onglet **Pratiques de confidentialité** : réponses ci-dessous.
+5. Onglet **Distribution** : visibilité et régions.
+6. **Envoyer pour examen** (quelques jours en général ; un e-mail annonce le résultat).
 
 ## Fichiers à envoyer
 
