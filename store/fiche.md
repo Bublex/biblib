@@ -27,8 +27,8 @@ Les visuels se régénèrent avec `node tools/store-assets.mjs` (voir le README)
 
 **Nom** (repris du manifeste) : Biblib : ce livre est-il dans ma bibliothèque ?
 
-**Résumé** (repris du manifeste, 119 caractères sur 132) :
-Sur la fiche d'un livre (Amazon, Babelio…), voyez s'il est dans vos bibliothèques, s'il est disponible, et réservez-le.
+**Résumé** (repris du manifeste, 109 caractères sur 132 ; sans nom de site, comme la description) :
+Sur la fiche d'un livre en ligne, voyez s'il est dans vos bibliothèques, s'il est disponible, et réservez-le.
 
 **Catégorie** : Outils
 
