@@ -7,6 +7,8 @@ import { classifyStatus, isOnSiteOnly, parseFrenchDate } from '../availability.j
 import { toIsbn13 } from '../isbn.js';
 
 const HEADERS = { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' };
+// Site « Magasin » (Mérignac) : la réserve, fermée au public. Le document se demande aux bibliothécaires.
+const STACKS = /^(magasin|r[ée]serve)$/i;
 
 async function post(lib, path, payload, ctx) {
   const res = await request(lib.base + path, { method: 'POST', headers: HEADERS, body: JSON.stringify(payload), signal: ctx.signal });
@@ -75,11 +77,13 @@ export default {
       const when = String(h.WhenBack || '').trim();
       const statut = String(h.Statut || '').trim();
       const status = [statut, when && !/^retour/i.test(when) ? `retour prévu le ${when}` : when].filter(Boolean).join(' – ');
+      const site = String(h.Site || '').trim();
+      const stacks = STACKS.test(site);
       return {
-        branch: String(h.Site || '').trim() || 'Bibliothèque',
+        branch: stacks ? 'Réserve (magasin)' : site || 'Bibliothèque',
         group: h.TopLevelScope || '',
         callNumber: String(h.Cote || '').trim(),
-        location: [h.Section, h.Localisation].map((x) => String(x || '').trim()).filter(Boolean).join(' · '),
+        location: [stacks ? 'À demander aux bibliothécaires' : '', h.Section, h.Localisation].map((x) => String(x || '').trim()).filter(Boolean).join(' · '),
         status: status || (h.IsAvailable ? 'Disponible' : 'Indisponible'),
         available: typeof h.IsAvailable === 'boolean' ? h.IsAvailable : classifyStatus(statut),
         onSiteOnly: isOnSiteOnly(statut),

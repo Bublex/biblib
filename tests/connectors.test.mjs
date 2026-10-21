@@ -92,8 +92,9 @@ test('Syracuse : scénario DEFAULT, ressources en ligne écartées (Mérignac)',
       return { success: true, d: { Results: results } };
     }],
     ['GetHoldings', () => ({ success: true, d: { Holdings: [
-      { Site: 'Médiathèque du Burck', Statut: 'En rayon', IsAvailable: true, Cote: 'R SAI' },
+      { Site: 'Médiathèque du Burck', Statut: 'En rayon', IsAvailable: true, Cote: 'R SAI', Section: 'Jeunes', Localisation: 'Romans' },
       { Site: 'Médiathèque de Beutre', Statut: 'En prêt', WhenBack: '04/11/2026', IsAvailable: false, Cote: 'R SAI' },
+      { Site: 'Magasin', Statut: 'En rayon', IsAvailable: true, Cote: 'R SAI', Section: 'Jeunes' },
     ] } })],
   ]);
   const merignac = getLibrary('merignac');
@@ -101,6 +102,10 @@ test('Syracuse : scénario DEFAULT, ressources en ligne écartées (Mérignac)',
   assert.equal(calls[0].url, 'https://www.mediatheque.merignac.com/Portal/Recherche/Search.svc/Search');
   assert.deepEqual(found.records.map((r) => r.id), ['SYRACUSE/489756']);
   assert.equal(found.status, 'available');
+  // « Magasin » n'est pas une médiathèque : c'est la réserve, accessible sur demande.
+  const where = Object.fromEntries(found.records[0].items.map((i) => [i.branch, i.location]));
+  assert.equal(where['Réserve (magasin)'], 'À demander aux bibliothécaires · Jeunes');
+  assert.equal(where['Médiathèque du Burck'], 'Jeunes · Romans');
 
   // Seul le podcast répond : le livre n'est pas au catalogue (et non « disponibilité à vérifier »).
   results = [podcast];
