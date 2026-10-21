@@ -92,10 +92,13 @@
       }
     }
     if (available.length) {
+      // Réseau où le livre réservé est acheminé vers la bibliothèque choisie : on nomme le réseau, pas une annexe peut-être lointaine.
+      const place = (a) => (a.lib.pickupAnywhere ? `${a.lib.short}, retrait au choix` : a.item.branch);
       const fav = available.find((a) => isFavorite(settings, a.lib.id, a.item.branch));
-      const first = fav || available[0];
-      const others = new Set(available.map((a) => a.item.branch)).size - 1;
-      return { tone: 'ok', busy: pending > 0, title: fav ? 'Disponible dans votre bibliothèque' : 'Disponible', detail: `${first.item.branch}${others > 0 ? ` et ${plural(others, 'autre', 'autres')}` : ''}` };
+      // Votre bibliothèque d'abord, puis une bibliothèque où l'emprunter directement, puis un réseau où le réserver.
+      const first = fav || available.find((a) => !a.lib.pickupAnywhere) || available[0];
+      const others = new Set(available.map(place)).size - 1;
+      return { tone: 'ok', busy: pending > 0, title: fav ? 'Disponible dans votre bibliothèque' : 'Disponible', detail: `${fav ? fav.item.branch : place(first)}${others > 0 ? ` et ${plural(others, 'autre', 'autres')}` : ''}` };
     }
     // Comptes sans détail par exemplaire (liste de résultats de Toulouse).
     const availLib = results.find((r) => (r.records || []).some((rec) => !rec.digital && rec.availableCount > 0));
@@ -161,35 +164,56 @@
         details ? h('div', { class: 'item-details' }, details) : null));
   }
 
-  function renderRecord(lib, record, settings, handlers, ui) {
+  /** Résumé d'un réseau où le livre réservé est acheminé vers la bibliothèque choisie par le lecteur. */
+  function renderPickup(items) {
+    const places = new Set(items.filter((i) => i.available === true).map((i) => i.branch)).size;
+    const back = earliestReturn([{ items }]);
+    const [tone, text] = places ? ['ok', `Disponible dans ${plural(places, 'bibliothèque', 'bibliothèques')} du réseau`]
+      : items.some((i) => i.available === false) ? ['wait', back ? `Emprunté, retour prévu le ${shortDate(back)}` : 'Indisponible pour le moment']
+        : ['none', 'Disponibilité à vérifier'];
+    return h('div', { class: 'pickup' },
+      h('span', { class: `item-status tone-${tone}` }, h('span', { class: 'dot' }), text),
+      h('div', { class: 'item-details' }, 'Sur réservation, retrait dans la bibliothèque de votre choix'));
+  }
+
+  function renderRecord(lib, record, settings, handlers, ui, book) {
     const items = [...(record.items || [])].sort((a, b) => Number(isFavorite(settings, lib.id, b.branch)) - Number(isFavorite(settings, lib.id, a.branch)));
     const key = `${lib.id}:${record.id}`;
     const expanded = ui.expandedRecords.has(key);
-    const visible = expanded ? items : items.slice(0, 4);
+    // Réseau avec retrait au choix : détail replié, sauf vos bibliothèques favorites.
+    const folded = lib.pickupAnywhere ? items.filter((i) => isFavorite(settings, lib.id, i.branch)) : items.slice(0, 4);
+    const visible = expanded ? items : folded;
     const meta = [record.year, record.type].filter(Boolean).join(' · ');
     const otherEdition = record.match === 'title' ? 'Autre édition (même titre)' : 'Autre édition';
     const tag = record.digital ? 'Version numérique' : record.sameEdition === false ? otherEdition : null;
     const url = safeUrl(record.url);
     let summary = null;
     if (!items.length && record.counts) summary = `${plural(record.counts.available, 'exemplaire disponible', 'exemplaires disponibles')} sur ${record.counts.total}`;
+    else if (!items.length && record.stacksCount) summary = 'En réserve uniquement : à demander aux bibliothécaires';
     else if (!items.length && !record.holdingsError) summary = 'Aucun exemplaire physique signalé';
 
+    // Même édition que le livre affiché en haut du panneau : son titre n'apprendrait rien.
+    const repeatsBook = record.sameEdition === true && !record.digital && Boolean(book?.title);
+
     return h('div', { class: 'record' },
-      h('div', { class: 'record-head' },
+      repeatsBook ? null : h('div', { class: 'record-head' },
         h('div', { class: 'record-title' }, record.title || 'Notice sans titre'),
         meta || tag ? h('div', { class: 'record-meta' }, tag ? h('span', { class: 'tag' }, tag) : null, meta) : null),
       record.holdingsError ? h('p', { class: 'note' }, `Disponibilité non communiquée : ${record.holdingsError}`) : null,
       summary ? h('p', { class: 'note' }, summary) : null,
+      lib.pickupAnywhere && items.length ? renderPickup(items) : null,
       visible.length ? h('ul', { class: 'items' }, visible.map((item) => renderItem(lib, item, settings, handlers))) : null,
-      items.length > 4 ? h('button', {
+      items.length > folded.length ? h('button', {
         class: 'more',
         type: 'button',
         onclick: () => { if (expanded) ui.expandedRecords.delete(key); else ui.expandedRecords.add(key); handlers.rerender?.(); },
-      }, expanded ? 'Voir moins' : `Voir les ${items.length - 4} autres exemplaires`) : null,
+      }, expanded ? 'Voir moins'
+        : lib.pickupAnywhere ? `Voir le détail par bibliothèque (${plural(items.length, 'exemplaire', 'exemplaires')})`
+          : `Voir les ${items.length - folded.length} autres exemplaires`) : null,
       url ? h('a', { class: 'cta', href: url, target: '_blank', rel: 'noopener noreferrer' }, record.availableCount > 0 ? 'Voir la fiche et réserver' : 'Réserver sur le catalogue', icon('external', 14)) : null);
   }
 
-  function renderLibrary(lib, result, settings, handlers, ui) {
+  function renderLibrary(lib, result, settings, handlers, ui, book) {
     const records = result?.records || [];
     const body = [];
     if (result?.status === 'absent') {
@@ -205,7 +229,7 @@
       body.push(h('p', { class: 'note' }, 'Biblib n’a pas encore l’autorisation d’interroger ce catalogue. ',
         h('button', { class: 'link', type: 'button', onclick: () => handlers.onOpenOptions?.() }, 'Autoriser dans les réglages')));
     }
-    for (const record of records) body.push(renderRecord(lib, record, settings, handlers, ui));
+    for (const record of records) body.push(renderRecord(lib, record, settings, handlers, ui, book));
     return h('section', { class: `lib status-${result?.status || 'loading'}` },
       h('header', { class: 'lib-head' }, h('h3', { class: 'lib-name' }, lib.name), chipFor(result, records)),
       body);
@@ -214,7 +238,7 @@
   function renderResults(container, state, settings, handlers, ui) {
     const libs = [...(state.libraries || [])].sort((a, b) =>
       (STATUS_ORDER[state.results[a.id]?.status || 'loading'] ?? 9) - (STATUS_ORDER[state.results[b.id]?.status || 'loading'] ?? 9));
-    container.replaceChildren(...libs.map((lib) => renderLibrary(lib, state.results[lib.id], settings, handlers, ui)));
+    container.replaceChildren(...libs.map((lib) => renderLibrary(lib, state.results[lib.id], settings, handlers, ui, state.book)));
     if (state.noLibraries) {
       container.replaceChildren(h('div', { class: 'empty' },
         h('p', null, 'Choisissez vos bibliothèques (Paris, Bordeaux, Lyon…) pour savoir si ce livre y est disponible.'),
@@ -363,11 +387,14 @@ button { font: inherit; color: inherit; }
 .status-absent .lib-name, .status-error .lib-name, .status-permission .lib-name { color: var(--muted); }
 
 .record { margin-top: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.record > :first-child { margin-top: 0; }
 .record-title { font-weight: 600; }
 .record-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; color: var(--muted); font-size: 12px; }
 .tag { padding: 1px 7px; border-radius: 5px; background: var(--wait-bg); color: var(--wait); font-size: 11px; font-weight: 600; }
 .note { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
 .note a { color: var(--accent); }
+.pickup { margin-top: 8px; }
+.pickup .item-status { white-space: normal; }
 .items { list-style: none; margin: 8px 0 0; padding: 0; }
 .item { display: flex; align-items: flex-start; gap: 6px; padding: 5px 0; }
 .item + .item { border-top: 1px dashed var(--line); }

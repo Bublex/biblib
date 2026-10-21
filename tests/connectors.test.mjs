@@ -61,6 +61,67 @@ test('Syracuse : recherche par ISBN (OR), exemplaires et disponibilité', async 
   assert.equal(calls[0].options.referrerPolicy, 'no-referrer');
 });
 
+test('Syracuse : portail servi sous un sous-dossier (Grand Poitiers)', async () => {
+  mockFetch([
+    ['Search.svc/Search', (_url, opts) => {
+      assert.equal(JSON.parse(opts.body).query.ScenarioCode, 'CATALOGUE');
+      return { success: true, d: { Results: [{ Resource: { RscId: '7', RscBase: 'SYRACUSE', Ttl: 'Le Petit Prince' }, SeekForHoldings: true }] } };
+    }],
+    ['GetHoldings', () => ({ success: true, d: { Holdings: [{ Site: 'François-Mitterrand', Statut: 'Disponible', IsAvailable: true }] } })],
+  ]);
+  const result = await lookupLibrary(getLibrary('grand-poitiers'), BOOK);
+  assert.equal(calls[0].url, 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION/Portal/Recherche/Search.svc/Search');
+  assert.equal(result.records[0].url, 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION/Default/doc/SYRACUSE/7');
+  assert.equal(result.searchUrl, 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION/Default/search.aspx?SC=CATALOGUE&QUERY=9782070612758');
+});
+
+test('Syracuse : scénario DEFAULT, ressources en ligne écartées (Mérignac)', async () => {
+  // Réponses observées sur le portail de Mérignac (octobre 2026).
+  const podcast = { Resource: { RscId: '2023C45516S0002', RscBase: 'RADIOFRANCE', Ttl: '“Le Petit Prince” a 80 ans', Type: 'Podcast' }, SeekForHoldings: false };
+  let results = [
+    {
+      Resource: { RscId: '489756', RscBase: 'SYRACUSE', Ttl: 'Le petit prince / Antoine de Saint-Exupéry', Id: 'isbn:978-2-07-061275-8', Type: 'Livre' },
+      FriendlyUrl: 'https://www.mediatheque.merignac.com/Default/doc/SYRACUSE/489756/le-petit-prince-antoine-de-saint-exupery',
+      SeekForHoldings: true,
+    },
+    podcast,
+  ];
+  let holdings = [
+    { Site: 'Médiathèque du Burck', Statut: 'En rayon', IsAvailable: true, Cote: 'R SAI', Section: 'Jeunes', Localisation: 'Romans' },
+    { Site: 'Médiathèque de Beutre', Statut: 'En prêt', WhenBack: '04/11/2026', IsAvailable: false, Cote: 'R SAI' },
+    { Site: 'Magasin', Statut: 'En rayon', IsAvailable: true, Cote: 'R SAI', Section: 'Jeunes' },
+  ];
+  mockFetch([
+    ['Search.svc/Search', (_url, opts) => {
+      assert.equal(JSON.parse(opts.body).query.ScenarioCode, 'DEFAULT');
+      return { success: true, d: { Results: results } };
+    }],
+    ['GetHoldings', () => ({ success: true, d: { Holdings: holdings } })],
+  ]);
+  const merignac = getLibrary('merignac');
+  const found = await lookupLibrary(merignac, BOOK);
+  assert.equal(calls[0].url, 'https://www.mediatheque.merignac.com/Portal/Recherche/Search.svc/Search');
+  assert.deepEqual(found.records.map((r) => r.id), ['SYRACUSE/489756']);
+  assert.equal(found.status, 'available');
+  // « Magasin » n'est pas une médiathèque : c'est la réserve, fermée au public. Ni listée ni « disponible ».
+  const [record] = found.records;
+  assert.deepEqual(record.items.map((i) => i.branch), ['Médiathèque du Burck', 'Médiathèque de Beutre']);
+  assert.equal(record.availableCount, 1);
+  assert.equal(record.stacksCount, 1);
+  assert.equal(record.items[0].location, 'Jeunes · Romans');
+
+  // Exemplaire en réserve seulement : au catalogue, mais pas « disponible ».
+  holdings = [{ Site: 'Magasin', Statut: 'En rayon', IsAvailable: true, Cote: 'BD TOU' }];
+  const stacksOnly = await lookupLibrary(merignac, BOOK);
+  assert.equal(stacksOnly.status, 'unknown');
+  assert.equal(stacksOnly.records[0].stacksCount, 1);
+
+  // Seul le podcast répond : le livre n'est pas au catalogue (et non « disponibilité à vérifier »).
+  results = [podcast];
+  const absent = await lookupLibrary(merignac, { ...BOOK, title: '' });
+  assert.equal(absent.status, 'absent');
+});
+
 test('Syracuse : SIGB en panne -> notice affichée, disponibilité « à vérifier »', async () => {
   mockFetch([
     ['Search.svc/Search', () => ({ success: true, d: { Results: [{ Resource: { RscId: '1', RscBase: 'SYRACUSE', Ttl: 'Le Petit Prince' }, FriendlyUrl: 'https://x/doc', SeekForHoldings: true }] } })],

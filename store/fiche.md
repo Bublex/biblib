@@ -27,19 +27,19 @@ Les visuels se régénèrent avec `node tools/store-assets.mjs` (voir le README)
 
 **Nom** (repris du manifeste) : Biblib : ce livre est-il dans ma bibliothèque ?
 
-**Résumé** (repris du manifeste, 119 caractères sur 132) :
-Sur la fiche d'un livre (Amazon, Babelio…), voyez s'il est dans vos bibliothèques, s'il est disponible, et réservez-le.
+**Résumé** (repris du manifeste, 109 caractères sur 132 ; sans nom de site, comme la description) :
+Sur la fiche d'un livre en ligne, voyez s'il est dans vos bibliothèques, s'il est disponible, et réservez-le.
 
 **Catégorie** : Outils
 
 **Langue** : Français
 
-**Description** :
+**Description** (pas d'énumération de sites ni de villes : un premier envoi a été refusé pour « spam dans les mots clés » à cause de la liste des sites de livres) :
 
 ```
 Ce livre est-il à la bibliothèque ? Biblib vous répond directement sur la fiche du livre, sans quitter la page.
 
-Sur Amazon, Babelio, Bedetheque, Fnac, Decitre, Mollat, Leslibraires.fr, Goodreads et d'autres sites de livres, une pastille indique en quelques secondes si le livre est dans vos bibliothèques municipales, s'il est disponible et dans quelle annexe. Un clic ouvre la notice du catalogue pour le réserver avec votre compte lecteur.
+Chez votre libraire en ligne ou sur votre site de lecture habituel, une pastille indique en quelques secondes si le livre est dans vos bibliothèques municipales, s'il est disponible et dans quelle annexe. Un clic ouvre la notice du catalogue pour le réserver avec votre compte lecteur.
 
 CE QUE BIBLIB VOUS MONTRE
 • Disponible, emprunté, en transit, date de retour prévue : annexe par annexe, avec la cote et le rayon.
@@ -47,8 +47,8 @@ CE QUE BIBLIB VOUS MONTRE
 • Vos bibliothèques favorites : une étoile sur votre annexe, elle passe en premier et la pastille vous dit si le livre y est.
 • Une recherche manuelle par ISBN ou par titre depuis l'icône de l'extension.
 
-13 GRANDS RÉSEAUX DE BIBLIOTHÈQUES
-Paris, Bordeaux et Bordeaux Métropole, Lyon, Marseille, Toulouse, Nice, Nantes, Montpellier, Strasbourg, Lille, Rennes (Champs Libres), Grenoble.
+VOS BIBLIOTHÈQUES
+Biblib interroge les catalogues de grands réseaux de bibliothèques publiques en France. Leur liste figure dans les réglages de l'extension : cochez ceux où vous êtes inscrit·e, Biblib n'interroge que ceux-là.
 
 VOS DONNÉES RESTENT SUR VOTRE APPAREIL
 • Aucun compte, aucun serveur Biblib, aucune statistique, aucun traceur.
@@ -62,7 +62,7 @@ POUR COMMENCER
 2. Cochez les bibliothèques où vous êtes inscrit·e.
 3. Ouvrez la fiche d'un livre sur votre site habituel.
 
-Biblib est un projet indépendant, affilié à aucune bibliothèque ni à aucun des sites cités. La disponibilité affichée est celle que publie le catalogue de chaque bibliothèque au moment de la recherche.
+Biblib est un projet indépendant, qui n'est affilié à aucune bibliothèque ni à aucun site de livres. La disponibilité affichée est celle que publie le catalogue de chaque bibliothèque au moment de la recherche.
 ```
 
 **Site officiel** : https://github.com/Bublex/biblib

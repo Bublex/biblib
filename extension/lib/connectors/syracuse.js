@@ -1,4 +1,4 @@
-// Connecteur Syracuse (Archimed) : Paris, Lille, Strasbourg, Montpellier, Nice, Grenoble…
+// Connecteur Syracuse (Archimed) : Paris, Lille, Strasbourg, Montpellier, Nice, Grenoble, Mérignac…
 // API JSON publique du portail : Search.svc/Search puis ILSClient.svc/GetHoldings.
 
 import { request, HttpError } from '../net.js';
@@ -7,6 +7,8 @@ import { classifyStatus, isOnSiteOnly, parseFrenchDate } from '../availability.j
 import { toIsbn13 } from '../isbn.js';
 
 const HEADERS = { 'Content-Type': 'application/json; charset=utf-8', Accept: 'application/json' };
+// Site « Magasin » (Mérignac) : la réserve, fermée au public. Le document se demande aux bibliothécaires.
+const STACKS = /^(magasin|r[ée]serve)$/i;
 
 async function post(lib, path, payload, ctx) {
   const res = await request(lib.base + path, { method: 'POST', headers: HEADERS, body: JSON.stringify(payload), signal: ctx.signal });
@@ -51,7 +53,9 @@ async function search(lib, queryString, ctx, size = 10) {
     },
     sst: 4,
   }, ctx);
-  return (d?.Results || []).map((r) => toRecord(lib, r));
+  // Le scénario DEFAULT cherche aussi dans les ressources en ligne du portail (Mérignac : un podcast
+  // Radio France pour l'ISBN du Petit Prince) : on ne garde que les notices du catalogue.
+  return (d?.Results || []).map((r) => toRecord(lib, r)).filter((r) => r.physical || r.docbase === 'SYRACUSE');
 }
 
 export default {
@@ -73,8 +77,9 @@ export default {
       const when = String(h.WhenBack || '').trim();
       const statut = String(h.Statut || '').trim();
       const status = [statut, when && !/^retour/i.test(when) ? `retour prévu le ${when}` : when].filter(Boolean).join(' – ');
+      const site = String(h.Site || '').trim();
       return {
-        branch: String(h.Site || '').trim() || 'Bibliothèque',
+        branch: site || 'Bibliothèque',
         group: h.TopLevelScope || '',
         callNumber: String(h.Cote || '').trim(),
         location: [h.Section, h.Localisation].map((x) => String(x || '').trim()).filter(Boolean).join(' · '),
@@ -83,6 +88,7 @@ export default {
         onSiteOnly: isOnSiteOnly(statut),
         dueDate: parseFrenchDate(when),
         reservable: Boolean(h.IsReservable),
+        stacks: STACKS.test(site),
       };
     });
   },

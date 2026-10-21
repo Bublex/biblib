@@ -21,7 +21,9 @@
         <h2 id="libs-title">Mes bibliothèques</h2>
         <p>Cochez les réseaux où vous êtes inscrit·e. Chrome vous demandera d’autoriser l’accès au catalogue choisi, et à lui seul.</p>
       </div>
+      <input type="search" class="lib-filter" id="libFilter" placeholder="Chercher une ville ou un réseau" aria-label="Chercher une bibliothèque" autocomplete="off">
       <ul class="libs" id="libs"></ul>
+      <p class="libs-empty" id="libsEmpty" hidden>Aucune bibliothèque ne correspond à cette recherche.</p>
     </section>
 
     <section class="panel" aria-labelledby="search-title">
