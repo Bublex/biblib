@@ -1,4 +1,5 @@
-// Génère la vidéo de présentation du Chrome Web Store : store/biblib-presentation.mp4 (1920×1080, 30 i/s, sans son).
+// Génère la vidéo de présentation du Chrome Web Store : store/biblib-presentation.mp4 (1920×1080, 30 i/s, sans son),
+// et les visuels du README : docs/demo.gif et trois captures (docs/reglages.png, docs/pastille.png, docs/panneau.png).
 // La vraie interface (page de réglages, pastille, panneau) est animée par tools/video/stage.html,
 // rendue image par image par Chrome, puis encodée par ffmpeg (à installer).
 //
@@ -14,6 +15,9 @@ import { launch, sleep } from './chrome.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const OUT = join(ROOT, 'store', 'biblib-presentation.mp4');
+const DOCS = join(ROOT, 'docs');
+// Captures du README : la fenêtre du navigateur à ces instants, sans le curseur.
+const STILLS = { 8.9: 'reglages', 13.2: 'pastille', 19.6: 'panneau' };
 const FPS = 30;
 const PREVIEW = process.env.VIDEO_PREVIEW?.split(/\s+/).filter(Boolean).map(Number);
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.png': 'image/png', '.svg': 'image/svg+xml' };
@@ -66,11 +70,20 @@ try {
   await run('window.ready');
   const total = Math.round((await run('window.DURATION')) * FPS);
   const wanted = new Set(PREVIEW?.map((s) => Math.round(s * FPS)));
+  const stills = new Map(Object.entries(STILLS).map(([t, name]) => [Math.round(Number(t) * FPS), name]));
+  // Position de la fenêtre hors animation (offset*, sans la translation de son entrée).
+  const browser = await run(`(() => { const b = document.getElementById('browser');
+    return { x: b.offsetLeft - 28, y: b.offsetTop - 28, width: b.offsetWidth + 56, height: b.offsetHeight + 56 }; })()`);
+  mkdirSync(DOCS, { recursive: true });
 
   for (let i = 0; i < total; i++) {
     await run(`seek(${i / FPS})`);
     if (PREVIEW && !wanted.has(i)) continue;
     await chrome.screenshot(page, join(frames, PREVIEW ? `${(i / FPS).toFixed(2)}s.png` : `${String(i).padStart(5, '0')}.png`));
+    if (!PREVIEW && stills.has(i)) {
+      await run("for (const id of ['cursor', 'ripple']) document.getElementById(id).style.opacity = 0");
+      await chrome.screenshot(page, join(DOCS, `${stills.get(i)}.png`), browser);
+    }
     if (!PREVIEW && i % FPS === 0) process.stdout.write(`\r${i / FPS} / ${total / FPS} s`);
   }
   if (PREVIEW) {
@@ -78,6 +91,10 @@ try {
   } else {
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(frames, '%05d.png'),
       '-c:v', 'libx264', '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', OUT]);
+    // GIF du README : 800 px de large, 12 i/s, palette calculée sur la vidéo (≈ 4 Mo).
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', OUT, '-vf',
+      'fps=12,scale=800:-1:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle',
+      join(DOCS, 'demo.gif')]);
     console.log(`\n${OUT}`);
   }
 } finally {

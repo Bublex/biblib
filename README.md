@@ -8,6 +8,23 @@ Extension Chrome. Sur la fiche d'un livre (Amazon, Babelio, Bedetheque, Fnac, De
 - **Bibliothèques favorites** : une étoile sur une annexe la fait passer en premier, et la pastille indique si le livre y est.
 - **Fenêtre de l'extension** (icône de la barre d'outils) : recherche manuelle par ISBN ou par titre.
 
+<p align="center"><img src="docs/demo.gif" width="800" alt="Démonstration : on coche Mérignac dans les réglages, la pastille Biblib apparaît sur la fiche d'un livre, le panneau détaille les exemplaires par médiathèque, puis on réserve sur le catalogue."></p>
+
+<table>
+  <tr>
+    <td width="33%"><img src="docs/reglages.png" alt="Page de réglages : recherche « mérignac » et bibliothèque cochée"></td>
+    <td width="33%"><img src="docs/pastille.png" alt="Fiche d'un livre avec la pastille Biblib « Disponible »"></td>
+    <td width="33%"><img src="docs/panneau.png" alt="Panneau Biblib : exemplaires par médiathèque, avec une favorite en tête"></td>
+  </tr>
+  <tr>
+    <td align="center">1. Cochez vos bibliothèques</td>
+    <td align="center">2. La pastille répond sur la fiche du livre</td>
+    <td align="center">3. Le détail, médiathèque par médiathèque</td>
+  </tr>
+</table>
+
+<sub>Librairie et catalogue fictifs ; images générées par <code>tools/store-video.mjs</code>.</sub>
+
 ## Installation (mode développeur)
 
 1. Ouvrez `chrome://extensions` et activez le **Mode développeur** (en haut à droite).
