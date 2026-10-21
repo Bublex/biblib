@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Biblib : vidéo de présentation</title>
+<!--
+  Vidéo de présentation du Chrome Web Store, rendue image par image par tools/store-video.mjs.
+  Scène 1280×720 (capturée en 1920×1080). Tout est piloté par seek(t) : rien ne bouge en temps réel,
+  y compris les transitions CSS de la vraie interface (horloge virtuelle, voir syncAnimations).
+-->
+<style>
+  :root { --bg: #f6f5f1; --fg: #1d1d1f; --muted: #5d5d64; --accent: #284b8f; --line: #e4e1da; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; background: var(--bg); }
+  body { position: relative; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); }
+  .blob { position: absolute; border-radius: 50%; }
+  #blob1 { width: 780px; height: 780px; right: -200px; top: -230px; background: #e3e9f5; }
+  #blob2 { width: 460px; height: 460px; left: -190px; bottom: -250px; background: #ece6d8; }
+
+  .tile { display: grid; place-items: center; width: 104px; height: 104px; border-radius: 26px; background: #fff; box-shadow: 0 18px 40px rgba(30, 40, 70, .16); }
+  .tile img { width: 80px; height: 80px; }
+  .word { margin-top: 16px; font-size: 28px; font-weight: 750; color: var(--accent); letter-spacing: .01em; }
+  .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .center h1 { margin-top: 20px; max-width: 920px; font-size: 54px; line-height: 1.08; letter-spacing: -.025em; }
+  .center p { margin-top: 16px; font-size: 22px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; max-width: 900px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 17px; font-weight: 600; }
+  .chip::before { content: ""; width: 16px; height: 16px; border-radius: 50%; background: #e5f3eb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f7a4d' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 11px no-repeat; }
+
+  #brand { position: absolute; left: 64px; top: 44px; display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 750; color: var(--accent); }
+  #brand img { width: 30px; height: 30px; }
+  .cap { position: absolute; left: 64px; top: 0; bottom: 0; width: 340px; display: flex; flex-direction: column; justify-content: center; }
+  .step { display: flex; align-items: center; gap: 10px; color: var(--accent); font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .step b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 15px; letter-spacing: 0; }
+  .cap h2 { margin-top: 16px; font-size: 36px; line-height: 1.12; letter-spacing: -.02em; }
+  .cap p { margin-top: 14px; font-size: 19px; line-height: 1.45; color: var(--muted); }
+
+  #browser { position: absolute; left: 440px; top: 52px; width: 792px; height: 616px; border-radius: 14px; overflow: hidden; background: #fff;
+    box-shadow: 0 30px 70px rgba(30, 40, 70, .22), 0 4px 14px rgba(30, 40, 70, .08); }
+  .bar { display: flex; align-items: center; gap: 14px; height: 46px; padding: 0 14px; background: #efeeea; border-bottom: 1px solid #e0ddd6; }
+  .dots { display: flex; gap: 7px; }
+  .dots i { display: block; width: 12px; height: 12px; border-radius: 50%; }
+  .url { flex: 1; display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 14px; border-radius: 15px; background: #fff; color: #55555c; font-size: 13.5px; }
+  .url img, .url svg { flex: none; width: 15px; height: 15px; }
+  .ext { position: relative; display: grid; place-items: center; width: 30px; height: 30px; }
+  .ext img { width: 20px; height: 20px; }
+  #badge { position: absolute; right: -3px; bottom: -1px; display: grid; place-items: center; min-width: 16px; height: 16px; border-radius: 8px; background: #1f7a4d; color: #fff; font-size: 10px; font-weight: 800; }
+  .view { position: absolute; left: 0; top: 46px; width: 792px; height: 570px; }
+  .view iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
+  #perm { position: absolute; top: 54px; right: 12px; width: 340px; padding: 16px; border-radius: 12px; background: #fff; transform-origin: top right;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, .2), 0 0 0 1px rgba(0, 0, 0, .06); font-size: 13.5px; }
+  .perm-head { display: flex; align-items: center; gap: 8px; font-weight: 650; }
+  .perm-head img { width: 18px; height: 18px; }
+  #perm p { margin-top: 10px; color: #444; line-height: 1.4; }
+  .perm-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+  .perm-btns span { padding: 7px 14px; border-radius: 16px; border: 1px solid #d5d5d5; color: #284b8f; font-weight: 600; }
+  .perm-btns #allow { border-color: #284b8f; background: #284b8f; color: #fff; }
+
+  #cursor { position: absolute; left: 0; top: 0; width: 28px; height: 28px; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .3)); transform-origin: 4px 3px; }
+  #ripple { position: absolute; left: 0; top: 0; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; border: 3px solid var(--accent); opacity: 0; }
+</style>
+</head>
+<body>
+  <div class="blob" id="blob1"></div>
+  <div class="blob" id="blob2"></div>
+
+  <section class="center" id="intro">
+    <div class="tile" id="introTile"><img src="/extension/icons/icon128.png" alt=""></div>
+    <div class="word" id="introWord">Biblib</div>
+    <h1 id="introTitle">Ce livre est-il à la bibliothèque&nbsp;?</h1>
+    <p id="introText">La réponse, directement sur la fiche du livre.</p>
+  </section>
+
+  <div id="brand"><img src="/extension/icons/icon128.png" alt="">Biblib</div>
+
+  <div class="cap" id="c1"><span class="step"><b>1</b>Une fois pour toutes</span><h2>Cochez vos bibliothèques</h2><p>Biblib n’interroge que les catalogues que vous avez choisis.</p></div>
+  <div class="cap" id="c2"><span class="step"><b>2</b>Partout où vous lisez</span><h2>Ouvrez la fiche d’un livre</h2><p>Chez votre libraire en ligne ou sur votre site de lecture&nbsp;: Biblib cherche aussitôt.</p></div>
+  <div class="cap" id="c3"><span class="step"><b>3</b>En un coup d’œil</span><h2>Disponible, emprunté, date de retour</h2><p>Médiathèque par médiathèque, avec la cote et le rayon.</p></div>
+  <div class="cap" id="c3b"><span class="step"><b>★</b>Vos favorites</span><h2>Votre médiathèque d’abord</h2><p>Une étoile, et Biblib vous dit en premier si le livre y est.</p></div>
+  <div class="cap" id="c4"><span class="step"><b>4</b>Sur le site de la bibliothèque</span><h2>Réservez en un clic</h2><p>La notice du catalogue s’ouvre&nbsp;: réservez avec votre compte lecteur.</p></div>
+
+  <div id="browser">
+    <div class="bar">
+      <div class="dots"><i style="background: #ff5f57"></i><i style="background: #febc2e"></i><i style="background: #28c840"></i></div>
+      <div class="url"><span id="urlIcon"></span><span id="urlText"></span></div>
+      <div class="ext"><img src="/extension/icons/icon32.png" alt=""><span id="badge">✓</span></div>
+    </div>
+    <div class="view">
+      <iframe id="fOptions" src="/reglages.html" title="Réglages"></iframe>
+      <iframe id="fLivre" src="/tools/video/livre.html" title="Fiche du livre"></iframe>
+      <iframe id="fNotice" src="/tools/video/notice.html" title="Notice"></iframe>
+    </div>
+    <div id="perm">
+      <div class="perm-head"><img src="/extension/icons/icon32.png" alt="">Biblib demande une autorisation</div>
+      <p>Lire et modifier vos données sur <b>www.mediatheque.merignac.com</b></p>
+      <div class="perm-btns"><span>Refuser</span><span id="allow">Autoriser</span></div>
+    </div>
+  </div>
+
+  <section class="center" id="outro">
+    <div class="tile" id="outroTile"><img src="/extension/icons/icon128.png" alt=""></div>
+    <div class="word" id="outroWord">Biblib</div>
+    <h1 id="outroTitle">Ce livre est-il dans ma bibliothèque&nbsp;?</h1>
+    <div class="chips"><span class="chip">Gratuit</span><span class="chip">Sans compte</span><span class="chip">Aucun traceur</span><span class="chip">Vos données restent sur votre appareil</span></div>
+  </section>
+
+  <div id="ripple"></div>
+  <svg id="cursor" viewBox="0 0 28 28" aria-hidden="true"><path d="M4 3l17 10.2-7.4 1.4 4.3 8.2-3.3 1.7-4.3-8.2L5 21.5z" fill="#fff" stroke="#1d1d1f" stroke-width="1.6" stroke-linejoin="round"/></svg>
+
+<script>
+  window.DURATION = 29;
+
+  const $ = (id) => document.getElementById(id);
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+  const E = {
+    out: (x) => 1 - (1 - x) ** 3,
+    inOut: (x) => (x < 0.5 ? 4 * x ** 3 : 1 - (-2 * x + 2) ** 3 / 2),
+    back: (x) => 1 + 2.70158 * (x - 1) ** 3 + 1.70158 * (x - 1) ** 2,
+  };
+  /** Avancement (0 → 1, adouci) entre t0 et t1. */
+  const k = (t, t0, t1, ease = E.out) => ease(clamp((t - t0) / (t1 - t0)));
+  const style = (el, opacity, transform = 'none') => { el.style.opacity = opacity; el.style.transform = transform; };
+  /** Entrée puis sortie : [opacité, décalage vertical]. */
+  const inOut = (t, tin, tout, rise = 26) => {
+    const a = k(t, tin, tin + 0.55);
+    const b = k(t, tout, tout + 0.4, E.inOut);
+    return [a * (1 - b), (1 - a) * rise - b * 18];
+  };
+
+  const frames = { options: $('fOptions'), livre: $('fLivre'), notice: $('fNotice') };
+  const win = (name) => frames[name].contentWindow;
+  const doc = (name) => frames[name].contentDocument;
+  const box = (el) => { const r = el.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; };
+  const inFrame = (name, r) => { const f = frames[name].getBoundingClientRect(); return { x: f.x + r.x, y: f.y + r.y, w: r.w, h: r.h }; };
+  const center = (r) => ({ x: r.x + r.w / 2, y: r.y + r.h / 2 });
+
+  // --- Curseur : trajets vers des cibles mesurées dans les pages (position figée une fois atteinte) ---
+  const TARGETS = {
+    off: () => ({ x: 1330, y: 790 }),
+    toggle: () => center(inFrame('options', box(doc('options').querySelector('#lib-merignac + .switch')))),
+    allow: () => center(box($('allow'))),
+    rest: () => ({ x: 980, y: 560 }),
+    aside: () => ({ x: 930, y: 610 }),
+    pill: () => center(inFrame('livre', win('livre').demo.rect('pill'))),
+    star: () => center(inFrame('livre', win('livre').demo.rect('star:Médiathèque du Burck'))),
+    cta: () => center(inFrame('livre', win('livre').demo.rect('cta'))),
+    reserve: () => center(inFrame('notice', box(doc('notice').getElementById('reserve')))),
+  };
+  const PATH = [
+    { t0: 5.9, t1: 6.7, to: 'toggle' },
+    { t0: 7.35, t1: 7.95, to: 'allow' },
+    { t0: 8.4, t1: 9.2, to: 'rest' },
+    { t0: 13.4, t1: 14.2, to: 'pill' },
+    { t0: 14.6, t1: 15.3, to: 'aside' },
+    { t0: 16.9, t1: 17.6, to: 'star' },
+    { t0: 18.2, t1: 18.9, to: 'aside' },
+    { t0: 20.2, t1: 20.9, to: 'cta' },
+    { t0: 22.3, t1: 23.0, to: 'reserve' },
+    { t0: 24.1, t1: 24.9, to: 'off' },
+  ];
+  const CLICKS = [6.8, 8.05, 14.3, 17.7, 21.0];
+
+  function cursorAt(t) {
+    let pos = TARGETS.off();
+    for (const seg of PATH) {
+      if (t < seg.t0) break;
+      if (t >= seg.t1) { seg.reached ||= TARGETS[seg.to](); pos = seg.reached; continue; }
+      const to = TARGETS[seg.to]();
+      const e = E.inOut((t - seg.t0) / (seg.t1 - seg.t0));
+      pos = { x: pos.x + (to.x - pos.x) * e, y: pos.y + (to.y - pos.y) * e };
+    }
+    return pos;
+  }
+
+  // --- Actions sur les vraies pages, déclenchées une fois quand la vidéo passe leur instant ---
+  const typeFilter = (text) => {
+    const input = doc('options').getElementById('libFilter');
+    input.value = text;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  };
+  const ACTIONS = [
+    [4.4, () => doc('options').getElementById('libFilter').focus()],
+    ...[...'mérignac'].map((_, i, chars) => [4.6 + i * 0.17, () => typeFilter(chars.slice(0, i + 1).join(''))]),
+    [6.6, () => doc('options').getElementById('libFilter').blur()],
+    [6.8, () => doc('options').getElementById('lib-merignac').click()],
+    [8.05, () => win('options').grantPermission()],
+    [10.6, () => win('livre').demo.mount()],
+    [12.6, () => win('livre').demo.showResults()],
+    [14.3, () => win('livre').demo.open()],
+    [17.7, () => win('livre').demo.star('Médiathèque du Burck')],
+    [21.0, () => win('livre').demo.press(true)],
+    [21.3, () => win('livre').demo.press(false)],
+    [23.0, () => doc('notice').getElementById('reserve').classList.add('hover')],
+  ];
+  let nextAction = 0;
+
+  // --- Horloge virtuelle des animations et transitions CSS (scène, pages, Shadow DOM du panneau) ---
+  const born = new WeakMap();
+  function syncAnimations(t) {
+    const roots = [document, ...Object.values(frames).map((f) => f.contentDocument)];
+    const host = doc('livre').querySelector('[data-biblib]');
+    if (host) roots.push(host.shadowRoot);
+    for (const root of roots) {
+      for (const anim of root.getAnimations()) {
+        if (!born.has(anim)) born.set(anim, t);
+        anim.pause();
+        anim.currentTime = (t - born.get(anim)) * 1000;
+      }
+    }
+  }
+
+  function render(t) {
+    style($('blob1'), 1, `translate(${Math.sin(t * 0.35) * 16}px, ${Math.cos(t * 0.28) * 12}px)`);
+    style($('blob2'), 1, `translate(${Math.cos(t * 0.3) * 14}px, ${Math.sin(t * 0.25) * 10}px)`);
+
+    // Introduction
+    const exit = k(t, 3.0, 3.5, E.inOut);
+    style($('intro'), 1 - exit, `translateY(${-24 * exit}px) scale(${1 - 0.03 * exit})`);
+    style($('introTile'), clamp((t - 0.15) / 0.3), `scale(${0.6 + 0.4 * k(t, 0.15, 0.8, E.back)})`);
+    style($('introWord'), k(t, 0.5, 1.0), `translateY(${(1 - k(t, 0.5, 1.0)) * 14}px)`);
+    style($('introTitle'), k(t, 0.85, 1.45), `translateY(${(1 - k(t, 0.85, 1.45)) * 24}px)`);
+    style($('introText'), k(t, 1.25, 1.85), `translateY(${(1 - k(t, 1.25, 1.85)) * 16}px)`);
+
+    // Navigateur, marque et sous-titres
+    const enter = k(t, 3.3, 4.1);
+    const leave = k(t, 24.3, 24.9, E.inOut);
+    style($('browser'), enter * (1 - leave), `translateX(${(1 - enter) * 90}px) scale(${1 - 0.04 * leave})`);
+    style($('brand'), k(t, 3.5, 4.0) * (1 - k(t, 24.3, 24.8)));
+    for (const [id, tin, tout] of [['c1', 3.7, 9.3], ['c2', 9.8, 13.2], ['c3', 13.5, 16.9], ['c3b', 17.1, 20.1], ['c4', 20.3, 24.2]]) {
+      const [o, y] = inOut(t, tin, tout);
+      style($(id), o, `translateY(${y}px)`);
+    }
+
+    // Pages affichées dans le navigateur
+    const toBook = k(t, 9.6, 10.1, E.inOut);
+    const toNotice = k(t, 21.6, 22.1, E.inOut);
+    frames.options.style.opacity = 1 - toBook;
+    frames.livre.style.opacity = toBook * (1 - toNotice);
+    frames.notice.style.opacity = toNotice;
+    const scene = t < 9.85 ? 'options' : t < 21.85 ? 'livre' : 'notice';
+    $('urlIcon').innerHTML = scene === 'options'
+      ? '<img src="/extension/icons/icon32.png" alt="">'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="#66666e" stroke-width="2.2" stroke-linecap="round"><path d="M6 11h12v10H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>';
+    $('urlText').textContent = { options: 'Biblib · Réglages', livre: 'ma-librairie.example/livres/le-petit-prince', notice: 'catalogue.example/notice/le-petit-prince' }[scene];
+
+    // Demande d'autorisation de Chrome
+    const permIn = k(t, 7.0, 7.25);
+    const permOut = k(t, 8.1, 8.3);
+    style($('perm'), permIn * (1 - permOut), `scale(${0.94 + 0.06 * permIn})`);
+
+    // Pastille (apparition, puis rebond quand le résultat arrive), badge de l'icône, défilement du panneau
+    const demo = win('livre').demo;
+    if (t >= 10.6) {
+      const pop = k(t, 10.6, 11.0, E.back);
+      const bounce = Math.sin(Math.PI * clamp((t - 12.6) / 0.4)) * 0.07;
+      const wrap = demo.wrap();
+      wrap.style.transformOrigin = 'bottom right';
+      style(wrap, clamp((t - 10.6) / 0.2), `scale(${0.6 + 0.4 * pop + bounce})`);
+    }
+    style($('badge'), k(t, 12.6, 12.8), `scale(${0.4 + 0.6 * k(t, 12.6, 12.9, E.back)})`);
+    if (t >= 14.3) {
+      const body = demo.body();
+      const max = body.scrollHeight - body.clientHeight;
+      body.scrollTop = max * (k(t, 15.0, 15.8, E.inOut) - k(t, 16.0, 16.7, E.inOut));
+    }
+
+    // Curseur et clics
+    const pos = cursorAt(t);
+    const lastClick = CLICKS.filter((c) => c <= t).pop();
+    const since = lastClick === undefined ? 9 : t - lastClick;
+    style($('cursor'), k(t, 5.7, 6.0) * (1 - k(t, 24.6, 24.9)), `translate(${pos.x - 4}px, ${pos.y - 3}px) scale(${since < 0.14 ? 0.85 : 1})`);
+    const ripple = clamp(since / 0.45);
+    style($('ripple'), since < 0.45 ? 0.7 * (1 - ripple) : 0, `translate(${pos.x}px, ${pos.y}px) scale(${0.4 + ripple})`);
+
+    // Conclusion
+    style($('outro'), t >= 24.9 ? 1 : 0);
+    style($('outroTile'), clamp((t - 25.0) / 0.3), `scale(${0.6 + 0.4 * k(t, 25.0, 25.65, E.back)})`);
+    style($('outroWord'), k(t, 25.3, 25.8), `translateY(${(1 - k(t, 25.3, 25.8)) * 14}px)`);
+    style($('outroTitle'), k(t, 25.5, 26.1), `translateY(${(1 - k(t, 25.5, 26.1)) * 22}px)`);
+    document.querySelectorAll('.chip').forEach((chip, i) => {
+      const a = k(t, 26.0 + i * 0.16, 26.5 + i * 0.16);
+      style(chip, a, `translateY(${(1 - a) * 14}px)`);
+    });
+  }
+
+  /** Affiche l'instant t (en secondes). Appelé dans l'ordre, image après image. */
+  window.seek = async (t) => {
+    while (nextAction < ACTIONS.length && ACTIONS[nextAction][0] <= t) ACTIONS[nextAction++][1]();
+    await new Promise((r) => setTimeout(r, 0)); // laisse finir les rendus asynchrones de la page de réglages
+    render(t);
+    syncAnimations(t);
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  };
+
+  const loaded = (frame) => new Promise((r) => (frame.contentDocument?.readyState === 'complete' ? r() : frame.addEventListener('load', r, { once: true })));
+  const until = async (test) => { while (!test()) await new Promise((r) => setTimeout(r, 50)); };
+  window.ready = (async () => {
+    await Promise.all(Object.values(frames).map(loaded));
+    await until(() => win('livre').demoReady && doc('options').querySelectorAll('#libs .lib').length > 0);
+    await document.fonts.ready;
+    const panel = doc('options').getElementById('libs-title').closest('.panel');
+    win('options').scrollTo(0, panel.getBoundingClientRect().top + win('options').scrollY - 16);
+    await seek(0);
+    return true;
+  })();
+</script>
+</body>
+</html>

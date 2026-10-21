@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Le Petit Prince</title>
+<!-- Fiche de livre d'une librairie fictive, avec le vrai panneau Biblib (vidéo de présentation). -->
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #222; background: #fff; }
+  .top { display: flex; align-items: center; gap: 22px; height: 58px; padding: 0 28px; border-bottom: 1px solid #ececec; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 750; font-size: 18px; color: #7a3b1d; letter-spacing: -.01em; }
+  .logo span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; background: #7a3b1d; color: #fff; font-size: 15px; }
+  .search { flex: 1; height: 34px; border-radius: 17px; background: #f3f2ef; color: #8b8b90; font-size: 13.5px; display: flex; align-items: center; padding: 0 16px; }
+  .cart { font-size: 13.5px; font-weight: 600; color: #444; }
+  .crumbs { padding: 14px 28px 0; font-size: 12.5px; color: #8b8b90; }
+  .product { display: flex; gap: 34px; padding: 18px 28px; }
+  .cover { flex: none; position: relative; width: 196px; height: 292px; border-radius: 4px 8px 8px 4px; overflow: hidden;
+    background: radial-gradient(circle at 70% 30%, #2f4f8f, #142449 70%); box-shadow: 0 12px 26px rgba(0, 0, 0, .22), inset 4px 0 0 rgba(255, 255, 255, .12); }
+  .cover .t { position: absolute; left: 18px; right: 18px; top: 26px; color: #fff; font: 600 25px/1.08 Georgia, "DejaVu Serif", serif; }
+  .cover .a { position: absolute; left: 18px; right: 18px; top: 92px; color: rgba(255, 255, 255, .75); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+  .cover .planet { position: absolute; left: 62px; bottom: 34px; width: 72px; height: 72px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f7d77a, #d9932f); }
+  .cover i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; opacity: .8; }
+  .info { flex: 1; min-width: 0; padding-top: 4px; }
+  h1 { font-size: 30px; letter-spacing: -.02em; }
+  .author { margin-top: 6px; font-size: 16px; color: #7a3b1d; font-weight: 600; }
+  .stars { margin-top: 10px; color: #e0a100; font-size: 15px; letter-spacing: 2px; }
+  .formats { display: flex; gap: 8px; margin-top: 18px; }
+  .formats span { padding: 8px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; color: #555; }
+  .formats .on { border-color: #7a3b1d; color: #7a3b1d; font-weight: 650; box-shadow: inset 0 0 0 1px #7a3b1d; }
+  .price { margin-top: 18px; font-size: 28px; font-weight: 750; }
+  .buy { margin-top: 12px; width: 240px; padding: 12px 0; border: 0; border-radius: 10px; background: #7a3b1d; color: #fff; font: inherit; font-weight: 650; font-size: 15px; }
+  .ship { margin-top: 10px; font-size: 13px; color: #2d7a3e; }
+  .desc { padding: 6px 28px 0; display: grid; gap: 9px; }
+  .desc i { display: block; height: 9px; border-radius: 5px; background: #efeeeb; }
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="logo"><span>L</span>Ma librairie</div>
+    <div class="search">Rechercher un livre, un auteur…</div>
+    <div class="cart">Panier</div>
+  </header>
+  <nav class="crumbs">Livres › Jeunesse › Romans</nav>
+  <main class="product">
+    <div class="cover" aria-hidden="true">
+      <div class="t">Le Petit Prince</div>
+      <div class="a">Antoine de Saint-Exupéry</div>
+      <i style="left: 30px; top: 150px"></i><i style="left: 150px; top: 132px"></i><i style="left: 112px; top: 182px"></i>
+      <i style="left: 46px; top: 214px"></i><i style="left: 168px; top: 220px"></i>
+      <div class="planet"></div>
+    </div>
+    <div class="info">
+      <h1>Le Petit Prince</h1>
+      <p class="author">Antoine de Saint-Exupéry</p>
+      <p class="stars">★★★★★</p>
+      <div class="formats"><span class="on">Poche</span><span>Grand format</span><span>Numérique</span></div>
+      <p class="price">7,90 €</p>
+      <button class="buy" type="button">Ajouter au panier</button>
+      <p class="ship">Expédié sous 48 h</p>
+    </div>
+  </main>
+  <div class="desc"><i></i><i></i><i style="width: 82%"></i><i style="width: 64%"></i></div>
+
+  <script>
+    // Shadow DOM ouvert : la vidéo vise les boutons du panneau avec le curseur.
+    const attachShadow = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function (init) { return attachShadow.call(this, { ...init, mode: 'open' }); };
+  </script>
+  <script src="/extension/content/ui.js"></script>
+  <script type="module">
+    import { getLibrary, libraryMeta } from '/extension/lib/libraries.js';
+
+    const item = (branch, available, extra = {}) => ({
+      branch, available, callNumber: 'R SAI', location: 'Jeunes · Romans', status: available ? 'En rayon' : 'En prêt', ...extra,
+    });
+    const record = (id, items) => ({
+      id, title: 'Le petit prince', url: 'https://catalogue.example/', sameEdition: true, match: 'isbn', items,
+      availableCount: items.filter((i) => i.available).length, totalCount: items.length,
+    });
+    // Exemple de résultats (Mérignac : exemplaires relevés sur le catalogue en octobre 2026).
+    const RESULTS = {
+      merignac: { libraryId: 'merignac', status: 'available', matchedBy: 'isbn', searchedBy: ['isbn'], records: [record('m', [
+        item('Médiathèque de Beaudésert', true),
+        item('Médiathèque du Burck', true),
+        item('Médiathèque Michel Sainte-Marie', true),
+        item('Médiathèque de Beutre', false, { dueDate: '2026-11-04' }),
+      ])] },
+      bordeaux: { libraryId: 'bordeaux', status: 'available', matchedBy: 'isbn', searchedBy: ['isbn'], records: [record('b', [
+        item('Bacalan', true), item('Grand Parc', true), item('Flora Tristan', true),
+        item('Caudéran', false, { dueDate: '2026-11-12' }), item('Bastide', false, { dueDate: '2026-11-20' }),
+      ])] },
+    };
+
+    const state = {
+      book: { title: 'Le Petit Prince', authors: ['Antoine de Saint-Exupéry'], isbns: ['9782070612758'] },
+      libraries: ['merignac', 'bordeaux'].map((id) => libraryMeta(getLibrary(id))),
+      results: {},
+      done: false,
+    };
+    const settings = { favorites: {} };
+    let panel = null;
+
+    const handlers = {
+      onToggleFavorite(libId, branch) {
+        const list = new Set(settings.favorites[libId] || []);
+        if (list.has(branch)) list.delete(branch); else list.add(branch);
+        settings.favorites = { ...settings.favorites, [libId]: [...list] };
+        panel.update(state, settings);
+      },
+    };
+
+    const root = () => document.querySelector('[data-biblib]').shadowRoot;
+    const rectOf = (el) => { const r = el.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; };
+    const itemOf = (branch) => [...root().querySelectorAll('.item')].find((li) => li.querySelector('.item-branch').textContent === branch);
+
+    window.demo = {
+      mount() {
+        panel = globalThis.BiblibUI.mountPanel({ position: 'right', handlers });
+        root().append(Object.assign(document.createElement('style'), {
+          textContent: '.card { max-height: 530px; } .cta.pressed { filter: brightness(.85); transform: scale(.97); }',
+        }));
+        panel.update(state, settings);
+      },
+      showResults() {
+        Object.assign(state, { results: RESULTS, done: true });
+        panel.update(state, settings);
+      },
+      open: () => panel.open(),
+      star: (branch) => itemOf(branch).querySelector('.star').click(),
+      press: (on) => root().querySelector('.lib .cta').classList.toggle('pressed', on),
+      wrap: () => root().querySelector('.wrap'),
+      body: () => root().querySelector('.body'),
+      root,
+      rect(target) {
+        if (target === 'pill') return rectOf(root().querySelector('.pill'));
+        if (target === 'cta') return rectOf(root().querySelector('.lib .cta'));
+        if (target.startsWith('star:')) return rectOf(itemOf(target.slice(5)).querySelector('.star'));
+        return null;
+      },
+    };
+    window.demoReady = true;
+  </script>
+</body>
+</html>

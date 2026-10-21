@@ -109,6 +109,7 @@ Test de bout en bout : charge l'extension dans Chrome (profil temporaire, headle
 
 - `npm run zip` : paquet `biblib.zip` à envoyer.
 - `CHROME_PATH=… node tools/store-assets.mjs` : captures 1280×800, vignette 440×280 et bannière 1400×560 dans `store/`, à partir du vrai panneau en action.
+- `CHROME_PATH=… node tools/store-video.mjs` : vidéo de présentation `store/biblib-presentation.mp4` (1920×1080, 29 s, sans son ; ffmpeg requis), animée avec la vraie page de réglages et le vrai panneau (`tools/video/`). Le Store n'accepte qu'un lien YouTube : la mettre en ligne sur YouTube, puis coller le lien dans la fiche.
 - [store/fiche.md](store/fiche.md) : textes à copier dans le tableau de bord (fiche, justifications des permissions, confidentialité, distribution).
 - [PRIVACY.md](PRIVACY.md) : politique de confidentialité, à publier à une adresse publique.
 
