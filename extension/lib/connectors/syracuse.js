@@ -78,17 +78,17 @@ export default {
       const statut = String(h.Statut || '').trim();
       const status = [statut, when && !/^retour/i.test(when) ? `retour prévu le ${when}` : when].filter(Boolean).join(' – ');
       const site = String(h.Site || '').trim();
-      const stacks = STACKS.test(site);
       return {
-        branch: stacks ? 'Réserve (magasin)' : site || 'Bibliothèque',
+        branch: site || 'Bibliothèque',
         group: h.TopLevelScope || '',
         callNumber: String(h.Cote || '').trim(),
-        location: [stacks ? 'À demander aux bibliothécaires' : '', h.Section, h.Localisation].map((x) => String(x || '').trim()).filter(Boolean).join(' · '),
+        location: [h.Section, h.Localisation].map((x) => String(x || '').trim()).filter(Boolean).join(' · '),
         status: status || (h.IsAvailable ? 'Disponible' : 'Indisponible'),
         available: typeof h.IsAvailable === 'boolean' ? h.IsAvailable : classifyStatus(statut),
         onSiteOnly: isOnSiteOnly(statut),
         dueDate: parseFrenchDate(when),
         reservable: Boolean(h.IsReservable),
+        stacks: STACKS.test(site),
       };
     });
   },

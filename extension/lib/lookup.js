@@ -71,6 +71,13 @@ export async function lookupLibrary(lib, book, { titleFallback = true, signal } 
     }
   }));
 
+  // Exemplaires en réserve (« stacks » : fermée au public, sur demande aux bibliothécaires) : ni listés
+  // ni comptés comme disponibles, seulement signalés quand la notice n'a pas d'autre exemplaire.
+  for (const r of records) {
+    r.stacksCount = r.items.filter((i) => i.stacks).length;
+    r.items = r.items.filter((i) => !i.stacks);
+  }
+
   // Réseau filtré (ex. ville de Bordeaux dans le catalogue métropolitain) : notice sans exemplaire local = absente.
   if (lib.branchFilter) records = records.filter((r) => r.holdingsError || r.items.length);
 

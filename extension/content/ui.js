@@ -189,6 +189,7 @@
     const url = safeUrl(record.url);
     let summary = null;
     if (!items.length && record.counts) summary = `${plural(record.counts.available, 'exemplaire disponible', 'exemplaires disponibles')} sur ${record.counts.total}`;
+    else if (!items.length && record.stacksCount) summary = 'En réserve uniquement : à demander aux bibliothécaires';
     else if (!items.length && !record.holdingsError) summary = 'Aucun exemplaire physique signalé';
 
     // Même édition que le livre affiché en haut du panneau : son titre n'apprendrait rien.
