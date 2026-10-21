@@ -110,11 +110,32 @@ test('Syracuse : scénario DEFAULT, ressources en ligne écartées (Mérignac)',
   assert.equal(record.stacksCount, 1);
   assert.equal(record.items[0].location, 'Jeunes · Romans');
 
-  // Exemplaire en réserve seulement : au catalogue, mais pas « disponible ».
-  holdings = [{ Site: 'Magasin', Statut: 'En rayon', IsAvailable: true, Cote: 'BD TOU' }];
+  assert.equal(record.onRequest, false);
+
+  // Exemplaire en réserve seulement (Oliver Twist, tome 1) : le catalogue l'affiche disponible, sur demande.
+  holdings = [{ Site: 'Magasin', Statut: 'En rayon', IsAvailable: true, Cote: 'BD DAU' }];
   const stacksOnly = await lookupLibrary(merignac, BOOK);
-  assert.equal(stacksOnly.status, 'unknown');
-  assert.equal(stacksOnly.records[0].stacksCount, 1);
+  assert.equal(stacksOnly.status, 'available');
+  assert.deepEqual(stacksOnly.records[0].items, []);
+  assert.equal(stacksOnly.records[0].onRequest, true);
+  assert.equal(stacksOnly.records[0].availableCount, 1);
+
+  // Exemplaires en rayon tous empruntés : celui de la réserve reste disponible sur demande.
+  holdings = [
+    { Site: 'Médiathèque du Burck', Statut: 'En prêt', WhenBack: '04/11/2026', IsAvailable: false, Cote: 'BD DAU' },
+    { Site: 'Magasin', Statut: 'En rayon', IsAvailable: true, Cote: 'BD DAU' },
+  ];
+  const lentOut = await lookupLibrary(merignac, BOOK);
+  assert.equal(lentOut.status, 'available');
+  assert.deepEqual(lentOut.records[0].items.map((i) => i.branch), ['Médiathèque du Burck']);
+  assert.equal(lentOut.records[0].onRequest, true);
+
+  // Exemplaire de la réserve lui-même indisponible : au catalogue, disponibilité à vérifier.
+  holdings = [{ Site: 'Magasin', Statut: 'En traitement', IsAvailable: false, Cote: 'BD DAU' }];
+  const stacksBusy = await lookupLibrary(merignac, BOOK);
+  assert.equal(stacksBusy.status, 'unknown');
+  assert.equal(stacksBusy.records[0].stacksCount, 1);
+  assert.equal(stacksBusy.records[0].onRequest, false);
 
   // Seul le podcast répond : le livre n'est pas au catalogue (et non « disponibilité à vérifier »).
   results = [podcast];

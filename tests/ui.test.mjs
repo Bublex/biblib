@@ -36,3 +36,12 @@ test('Pastille : la bibliothèque favorite reste nommée, même dans un réseau 
   assert.equal(s.title, 'Disponible dans votre bibliothèque');
   assert.equal(s.detail, 'Caudéran');
 });
+
+test('Pastille : exemplaire en réserve seulement -> disponible sur demande', () => {
+  const reserve = { libraryId: 'merignac', status: 'available', records: [{ items: [], stacksCount: 1, onRequest: true, availableCount: 1, totalCount: 1 }] };
+  const s = summarize(state(reserve), {});
+  assert.equal(s.title, 'Disponible sur demande');
+  assert.equal(s.detail, 'Mérignac, en réserve');
+  // Un exemplaire en rayon ailleurs passe avant.
+  assert.equal(summarize(state(reserve, result('bordeaux', item('Bacalan'))), {}).title, 'Disponible');
+});

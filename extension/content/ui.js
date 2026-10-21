@@ -101,8 +101,11 @@
       return { tone: 'ok', busy: pending > 0, title: fav ? 'Disponible dans votre bibliothèque' : 'Disponible', detail: `${fav ? fav.item.branch : place(first)}${others > 0 ? ` et ${plural(others, 'autre', 'autres')}` : ''}` };
     }
     // Comptes sans détail par exemplaire (liste de résultats de Toulouse).
-    const availLib = results.find((r) => (r.records || []).some((rec) => !rec.digital && rec.availableCount > 0));
+    const availLib = results.find((r) => (r.records || []).some((rec) => !rec.digital && !rec.onRequest && rec.availableCount > 0));
     if (availLib) return { tone: 'ok', busy: pending > 0, title: 'Disponible', detail: byId[availLib.libraryId].name };
+    // Exemplaire en réserve seulement (Mérignac : site « Magasin »).
+    const reserveLib = results.find((r) => (r.records || []).some((rec) => !rec.digital && rec.onRequest));
+    if (reserveLib) return { tone: 'ok', busy: pending > 0, title: 'Disponible sur demande', detail: `${byId[reserveLib.libraryId].short}, en réserve` };
     if (digitalLib) return { tone: 'ok', busy: pending > 0, title: 'Disponible en version numérique', detail: digitalLib.name };
 
     const borrowed = results.filter((r) => r.status === 'unavailable');
@@ -176,6 +179,13 @@
       h('div', { class: 'item-details' }, 'Sur réservation, retrait dans la bibliothèque de votre choix'));
   }
 
+  /** Exemplaire disponible en réserve (magasin), sans exemplaire disponible en rayon. */
+  function renderReserve() {
+    return h('div', { class: 'pickup' },
+      h('span', { class: 'item-status tone-ok' }, h('span', { class: 'dot' }), 'Disponible en réserve'),
+      h('div', { class: 'item-details' }, 'À demander aux bibliothécaires'));
+  }
+
   function renderRecord(lib, record, settings, handlers, ui, book) {
     const items = [...(record.items || [])].sort((a, b) => Number(isFavorite(settings, lib.id, b.branch)) - Number(isFavorite(settings, lib.id, a.branch)));
     const key = `${lib.id}:${record.id}`;
@@ -189,7 +199,7 @@
     const url = safeUrl(record.url);
     let summary = null;
     if (!items.length && record.counts) summary = `${plural(record.counts.available, 'exemplaire disponible', 'exemplaires disponibles')} sur ${record.counts.total}`;
-    else if (!items.length && record.stacksCount) summary = 'En réserve uniquement : à demander aux bibliothécaires';
+    else if (!items.length && record.stacksCount) summary = record.onRequest ? null : 'En réserve uniquement : à demander aux bibliothécaires';
     else if (!items.length && !record.holdingsError) summary = 'Aucun exemplaire physique signalé';
 
     // Même édition que le livre affiché en haut du panneau : son titre n'apprendrait rien.
@@ -201,6 +211,7 @@
         meta || tag ? h('div', { class: 'record-meta' }, tag ? h('span', { class: 'tag' }, tag) : null, meta) : null),
       record.holdingsError ? h('p', { class: 'note' }, `Disponibilité non communiquée : ${record.holdingsError}`) : null,
       summary ? h('p', { class: 'note' }, summary) : null,
+      record.onRequest ? renderReserve() : null,
       lib.pickupAnywhere && items.length ? renderPickup(items) : null,
       visible.length ? h('ul', { class: 'items' }, visible.map((item) => renderItem(lib, item, settings, handlers))) : null,
       items.length > folded.length ? h('button', {

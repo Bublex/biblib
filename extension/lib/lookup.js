@@ -71,19 +71,23 @@ export async function lookupLibrary(lib, book, { titleFallback = true, signal } 
     }
   }));
 
-  // Exemplaires en réserve (« stacks » : fermée au public, sur demande aux bibliothécaires) : ni listés
-  // ni comptés comme disponibles, seulement signalés quand la notice n'a pas d'autre exemplaire.
+  // Exemplaires en réserve (« stacks » : fermée au public, sur demande aux bibliothécaires) : jamais listés
+  // comme une bibliothèque. Ils ne comptent que si aucun exemplaire n'est disponible en rayon :
+  // le livre est alors « disponible sur demande » (le catalogue de la bibliothèque l'affiche disponible).
   for (const r of records) {
-    r.stacksCount = r.items.filter((i) => i.stacks).length;
+    const stacks = r.items.filter((i) => i.stacks);
     r.items = r.items.filter((i) => !i.stacks);
+    r.stacksCount = stacks.length;
+    r.stacksAvailable = stacks.filter((i) => i.available === true).length;
+    r.onRequest = r.stacksAvailable > 0 && !r.items.some((i) => i.available === true);
   }
 
   // Réseau filtré (ex. ville de Bordeaux dans le catalogue métropolitain) : notice sans exemplaire local = absente.
   if (lib.branchFilter) records = records.filter((r) => r.holdingsError || r.items.length);
 
   for (const r of records) {
-    r.availableCount = r.counts?.available ?? r.items.filter((i) => i.available === true).length;
-    r.totalCount = r.counts?.total ?? r.items.length;
+    r.availableCount = r.counts?.available ?? (r.onRequest ? r.stacksAvailable : r.items.filter((i) => i.available === true).length);
+    r.totalCount = r.counts?.total ?? r.items.length + (r.onRequest ? r.stacksCount : 0);
     r.items.sort((a, b) => itemRank(a) - itemRank(b) || a.branch.localeCompare(b.branch, 'fr'));
   }
   records.sort((a, b) => editionRank(a) - editionRank(b) || Number(b.availableCount > 0) - Number(a.availableCount > 0) || b.totalCount - a.totalCount);
