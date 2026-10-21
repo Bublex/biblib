@@ -22,7 +22,7 @@ Pour une archive à partager : `npm run zip` produit `biblib.zip`.
 | Réseau | Logiciel du catalogue | Remarques |
 |---|---|---|
 | Paris | Syracuse (Archimed) | Le 20/10/2026, le service de disponibilité de Paris renvoyait une erreur, y compris sur son propre site : la notice s'affiche, la disponibilité est marquée « à vérifier ». |
-| Bordeaux | inMedia (Bibliomondo) | Catalogue commun à la métropole, filtré sur les annexes de la ville. |
+| Bordeaux | inMedia (Bibliomondo) | Catalogue commun à la métropole, filtré sur les annexes de la ville. Résumé par réseau : un livre réservé est acheminé vers la bibliothèque choisie. |
 | Bordeaux Métropole | inMedia | Toutes les communes, groupées par commune. |
 | Lyon | inMedia | |
 | Marseille | inMedia | |

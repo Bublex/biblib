@@ -51,7 +51,9 @@ async function search(lib, queryString, ctx, size = 10) {
     },
     sst: 4,
   }, ctx);
-  return (d?.Results || []).map((r) => toRecord(lib, r));
+  // Le scénario DEFAULT cherche aussi dans les ressources en ligne du portail (Mérignac : un podcast
+  // Radio France pour l'ISBN du Petit Prince) : on ne garde que les notices du catalogue.
+  return (d?.Results || []).map((r) => toRecord(lib, r)).filter((r) => r.physical || r.docbase === 'SYRACUSE');
 }
 
 export default {

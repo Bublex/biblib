@@ -29,6 +29,9 @@ export const LIBRARIES = [
     isbnSyntax: 'plain',
     // Le catalogue est commun à la métropole : on ne garde que les exemplaires de la ville.
     branchFilter: { field: 'parentBranch_desc', values: ['Commune de Bordeaux'] },
+    // Un livre réservé est acheminé vers la bibliothèque de la ville choisie par le lecteur :
+    // l'annexe qui le détient importe peu, on résume donc par réseau.
+    pickupAnywhere: true,
   },
   {
     id: 'bordeaux-metropole',
@@ -210,5 +213,5 @@ export function originPatterns(lib) {
 
 /** Informations utiles à l'interface (sans les paramètres techniques). */
 export function libraryMeta(lib) {
-  return { id: lib.id, name: lib.name, short: lib.short, city: lib.city, showGroups: Boolean(lib.showGroups) };
+  return { id: lib.id, name: lib.name, short: lib.short, city: lib.city, showGroups: Boolean(lib.showGroups), pickupAnywhere: Boolean(lib.pickupAnywhere) };
 }

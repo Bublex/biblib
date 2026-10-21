@@ -75,6 +75,39 @@ test('Syracuse : portail servi sous un sous-dossier (Grand Poitiers)', async () 
   assert.equal(result.searchUrl, 'https://www.mediatheques-grandpoitiers.fr/EXPLOITATION/Default/search.aspx?SC=CATALOGUE&QUERY=9782070612758');
 });
 
+test('Syracuse : scénario DEFAULT, ressources en ligne écartées (Mérignac)', async () => {
+  // Réponses observées sur le portail de Mérignac (octobre 2026).
+  const podcast = { Resource: { RscId: '2023C45516S0002', RscBase: 'RADIOFRANCE', Ttl: '“Le Petit Prince” a 80 ans', Type: 'Podcast' }, SeekForHoldings: false };
+  let results = [
+    {
+      Resource: { RscId: '489756', RscBase: 'SYRACUSE', Ttl: 'Le petit prince / Antoine de Saint-Exupéry', Id: 'isbn:978-2-07-061275-8', Type: 'Livre' },
+      FriendlyUrl: 'https://www.mediatheque.merignac.com/Default/doc/SYRACUSE/489756/le-petit-prince-antoine-de-saint-exupery',
+      SeekForHoldings: true,
+    },
+    podcast,
+  ];
+  mockFetch([
+    ['Search.svc/Search', (_url, opts) => {
+      assert.equal(JSON.parse(opts.body).query.ScenarioCode, 'DEFAULT');
+      return { success: true, d: { Results: results } };
+    }],
+    ['GetHoldings', () => ({ success: true, d: { Holdings: [
+      { Site: 'Médiathèque du Burck', Statut: 'En rayon', IsAvailable: true, Cote: 'R SAI' },
+      { Site: 'Médiathèque de Beutre', Statut: 'En prêt', WhenBack: '04/11/2026', IsAvailable: false, Cote: 'R SAI' },
+    ] } })],
+  ]);
+  const merignac = getLibrary('merignac');
+  const found = await lookupLibrary(merignac, BOOK);
+  assert.equal(calls[0].url, 'https://www.mediatheque.merignac.com/Portal/Recherche/Search.svc/Search');
+  assert.deepEqual(found.records.map((r) => r.id), ['SYRACUSE/489756']);
+  assert.equal(found.status, 'available');
+
+  // Seul le podcast répond : le livre n'est pas au catalogue (et non « disponibilité à vérifier »).
+  results = [podcast];
+  const absent = await lookupLibrary(merignac, { ...BOOK, title: '' });
+  assert.equal(absent.status, 'absent');
+});
+
 test('Syracuse : SIGB en panne -> notice affichée, disponibilité « à vérifier »', async () => {
   mockFetch([
     ['Search.svc/Search', () => ({ success: true, d: { Results: [{ Resource: { RscId: '1', RscBase: 'SYRACUSE', Ttl: 'Le Petit Prince' }, FriendlyUrl: 'https://x/doc', SeekForHoldings: true }] } })],
