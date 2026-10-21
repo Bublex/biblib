@@ -176,7 +176,7 @@
       h('div', { class: 'item-details' }, 'Sur réservation, retrait dans la bibliothèque de votre choix'));
   }
 
-  function renderRecord(lib, record, settings, handlers, ui) {
+  function renderRecord(lib, record, settings, handlers, ui, book) {
     const items = [...(record.items || [])].sort((a, b) => Number(isFavorite(settings, lib.id, b.branch)) - Number(isFavorite(settings, lib.id, a.branch)));
     const key = `${lib.id}:${record.id}`;
     const expanded = ui.expandedRecords.has(key);
@@ -191,8 +191,11 @@
     if (!items.length && record.counts) summary = `${plural(record.counts.available, 'exemplaire disponible', 'exemplaires disponibles')} sur ${record.counts.total}`;
     else if (!items.length && !record.holdingsError) summary = 'Aucun exemplaire physique signalé';
 
+    // Même édition que le livre affiché en haut du panneau : son titre n'apprendrait rien.
+    const repeatsBook = record.sameEdition === true && !record.digital && Boolean(book?.title);
+
     return h('div', { class: 'record' },
-      h('div', { class: 'record-head' },
+      repeatsBook ? null : h('div', { class: 'record-head' },
         h('div', { class: 'record-title' }, record.title || 'Notice sans titre'),
         meta || tag ? h('div', { class: 'record-meta' }, tag ? h('span', { class: 'tag' }, tag) : null, meta) : null),
       record.holdingsError ? h('p', { class: 'note' }, `Disponibilité non communiquée : ${record.holdingsError}`) : null,
@@ -209,7 +212,7 @@
       url ? h('a', { class: 'cta', href: url, target: '_blank', rel: 'noopener noreferrer' }, record.availableCount > 0 ? 'Voir la fiche et réserver' : 'Réserver sur le catalogue', icon('external', 14)) : null);
   }
 
-  function renderLibrary(lib, result, settings, handlers, ui) {
+  function renderLibrary(lib, result, settings, handlers, ui, book) {
     const records = result?.records || [];
     const body = [];
     if (result?.status === 'absent') {
@@ -225,7 +228,7 @@
       body.push(h('p', { class: 'note' }, 'Biblib n’a pas encore l’autorisation d’interroger ce catalogue. ',
         h('button', { class: 'link', type: 'button', onclick: () => handlers.onOpenOptions?.() }, 'Autoriser dans les réglages')));
     }
-    for (const record of records) body.push(renderRecord(lib, record, settings, handlers, ui));
+    for (const record of records) body.push(renderRecord(lib, record, settings, handlers, ui, book));
     return h('section', { class: `lib status-${result?.status || 'loading'}` },
       h('header', { class: 'lib-head' }, h('h3', { class: 'lib-name' }, lib.name), chipFor(result, records)),
       body);
@@ -234,7 +237,7 @@
   function renderResults(container, state, settings, handlers, ui) {
     const libs = [...(state.libraries || [])].sort((a, b) =>
       (STATUS_ORDER[state.results[a.id]?.status || 'loading'] ?? 9) - (STATUS_ORDER[state.results[b.id]?.status || 'loading'] ?? 9));
-    container.replaceChildren(...libs.map((lib) => renderLibrary(lib, state.results[lib.id], settings, handlers, ui)));
+    container.replaceChildren(...libs.map((lib) => renderLibrary(lib, state.results[lib.id], settings, handlers, ui, state.book)));
     if (state.noLibraries) {
       container.replaceChildren(h('div', { class: 'empty' },
         h('p', null, 'Choisissez vos bibliothèques (Paris, Bordeaux, Lyon…) pour savoir si ce livre y est disponible.'),
@@ -383,6 +386,7 @@ button { font: inherit; color: inherit; }
 .status-absent .lib-name, .status-error .lib-name, .status-permission .lib-name { color: var(--muted); }
 
 .record { margin-top: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.record > :first-child { margin-top: 0; }
 .record-title { font-weight: 600; }
 .record-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 2px; color: var(--muted); font-size: 12px; }
 .tag { padding: 1px 7px; border-radius: 5px; background: var(--wait-bg); color: var(--wait); font-size: 11px; font-weight: 600; }
