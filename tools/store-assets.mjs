@@ -88,7 +88,7 @@ try {
 
   const slides = [
     slide('Ce livre est-il à la bibliothèque&nbsp;?',
-      '<p>Biblib répond sur la fiche du livre, sans quitter la page&nbsp;: Amazon, Babelio, Bedetheque, Fnac, Decitre, Mollat…</p>',
+      '<p>Biblib répond sur la fiche du livre, chez votre libraire en ligne ou sur votre site de lecture, sans quitter la page.</p>',
       // Partie droite de la page (fiche + panneau), à taille lisible.
       `<div class="shot" style="width: 660px; height: 560px; overflow: hidden; position: relative; background: #fff">
         <img src="${img('babelio-page.png')}" style="position: absolute; right: 0; bottom: 0; width: 1100px"></div>`),
@@ -98,8 +98,9 @@ try {
     slide('Une autre édition&nbsp;? Trouvée aussi',
       '<p>Recherche par ISBN, toutes éditions connues confondues, puis par titre et auteur. Les autres éditions sont clairement signalées.</p>',
       panel('babelio')),
-    slide('13 grands réseaux de bibliothèques',
-      '<p>Paris, Bordeaux et sa métropole, Lyon, Marseille, Toulouse, Nice, Nantes, Montpellier, Strasbourg, Lille, Rennes, Grenoble.</p><p>Une étoile sur votre annexe&nbsp;: elle passe en premier.</p>',
+    // Pas d'énumération de sites ni de villes dans les visuels : le Store la refuse comme « spam dans les mots clés ».
+    slide('Vos bibliothèques municipales',
+      '<p>Cochez les réseaux où vous êtes inscrit·e&nbsp;: Biblib n’interroge que ceux-là.</p><p>Une étoile sur votre annexe&nbsp;: elle passe en premier.</p>',
       `<img class="shot" src="${img('options.png')}" style="width: 600px">`),
     slide('Vos données restent sur votre appareil',
       `<ul><li>Aucun compte, aucun serveur Biblib, aucune statistique</li>
@@ -128,7 +129,7 @@ try {
     .brand { color: #fff; } h1 { font-size: 50px; } p { color: rgba(255,255,255,.85); }
     .visual { align-items: flex-start; padding-top: 48px; }
   </style><div class="slide"><div class="text" style="flex-basis: 600px"><div class="brand"><img src="${icon}" alt="">Biblib</div>
-  <h1>Ce livre est-il dans ma bibliothèque&nbsp;?</h1><p>La réponse sur Amazon, Babelio, Bedetheque… et la réservation en un clic.</p></div>
+  <h1>Ce livre est-il dans ma bibliothèque&nbsp;?</h1><p>La réponse sur la fiche du livre, et la réservation en un clic.</p></div>
   <div class="visual">${panel('amazon', 420, 900)}</div></div>`;
 
   const render = async (html, file, w, h) => {
