@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "bubble": {
+      "type": "http",
+      "url": "https://mcp.bubble.io/mcp"
+    }
+  }
+}
