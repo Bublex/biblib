@@ -3,6 +3,7 @@ import { getSettings, saveSettings } from '../lib/settings.js';
 import { lookupLibrary } from '../lib/lookup.js';
 import { humanError } from '../lib/net.js';
 import { stripAccents } from '../lib/text.js';
+import { phoneTemplate } from '../lib/phone.js';
 
 const TEST_BOOK = { isbns: ['9782070612758', '9782070408504'], title: 'Le Petit Prince', authors: ['Antoine de Saint-Exupéry'] };
 
@@ -174,6 +175,44 @@ function renderHiddenSites() {
     }, 'Réafficher'))));
 }
 
+// --- Raccourci téléphone ---
+
+async function copyTemplate(template, button) {
+  try {
+    await navigator.clipboard.writeText(template);
+    button.textContent = 'Copiée';
+  } catch {
+    button.textContent = 'Sélectionnez-la';
+  }
+  setTimeout(() => { button.textContent = 'Copier'; }, 2000);
+}
+
+function renderPhone() {
+  const libs = settings.enabledLibraries.map(getLibrary).filter(Boolean);
+  if (!libs.length) {
+    $('phoneLibs').replaceChildren(el('li', { class: 'empty' }, 'Cochez d’abord une bibliothèque : son adresse de recherche s’affichera ici.'));
+    return;
+  }
+  $('phoneLibs').replaceChildren(...libs.map((lib) => {
+    const template = phoneTemplate(lib);
+    if (!template) {
+      return el('li', { class: 'phone-lib' },
+        el('strong', {}, lib.name),
+        el('small', {}, 'Ce catalogue n’a pas d’adresse de recherche directe : pas de raccourci possible.'));
+    }
+    const button = el('button', { type: 'button', class: 'secondary small', 'aria-label': `Copier l’adresse de ${lib.name}` }, 'Copier');
+    button.addEventListener('click', () => copyTemplate(template, button));
+    return el('li', { class: 'phone-lib' }, el('strong', {}, lib.name), el('code', {}, template), button);
+  }));
+}
+
+// Ouvert depuis le lien « Sur téléphone » de la fenêtre de l'extension.
+function revealPhone() {
+  if (location.hash !== '#telephone') return;
+  $('telephone').open = true;
+  $('telephone').scrollIntoView({ block: 'start' });
+}
+
 $('clearCache').addEventListener('click', async () => {
   await chrome.runtime.sendMessage({ type: 'clearCache' });
   $('cacheStatus').textContent = 'Cache vidé.';
@@ -184,12 +223,18 @@ chrome.storage.onChanged.addListener((changes, area) => {
   for (const [key, { newValue }] of Object.entries(changes)) settings[key] = newValue;
   if (changes.favorites) renderFavorites();
   if (changes.hiddenSites) renderHiddenSites();
-  if (changes.enabledLibraries) renderLibraries();
+  if (changes.enabledLibraries) {
+    renderLibraries();
+    renderPhone();
+  }
 });
 
 $('libFilter').addEventListener('input', filterLibraries);
+window.addEventListener('hashchange', revealPhone);
 
 bindPreferences();
-renderLibraries();
 renderFavorites();
 renderHiddenSites();
+renderPhone();
+// La liste des bibliothèques, au-dessus, se remplit de façon asynchrone : on attend pour faire défiler.
+renderLibraries().then(revealPhone);

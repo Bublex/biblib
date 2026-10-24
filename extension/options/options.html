@@ -84,6 +84,34 @@
       <button type="button" class="secondary" id="clearCache">Vider les résultats en cache</button>
       <span class="hint" id="cacheStatus" role="status"></span>
     </section>
+
+    <details class="panel phone" id="telephone">
+      <summary>
+        <span class="phone-title"><h2>Sur votre téléphone</h2><small>Scannez le code-barres d’un livre, le catalogue s’ouvre sur sa recherche.</small></span>
+      </summary>
+      <p class="phone-intro">Chez un ami, en librairie : un raccourci lit l’ISBN au dos du livre et ouvre directement sa recherche dans le catalogue. C’est votre téléphone qui interroge le catalogue, rien ne passe par Biblib.</p>
+      <ul class="phone-libs" id="phoneLibs"></ul>
+      <div class="phone-steps">
+        <section>
+          <h3>iPhone : app Raccourcis</h3>
+          <ol>
+            <li>Créez un raccourci et ajoutez l’action de scan de code QR ou code-barres (cherchez «&nbsp;code-barres&nbsp;»).</li>
+            <li>Action <strong>URL</strong> : collez l’adresse, puis remplacez <code>{RESULT}</code> par la variable du scan, proposée au-dessus du clavier.</li>
+            <li>Action <strong>Ouvrir les URL</strong>.</li>
+            <li>Ajoutez le raccourci à l’écran d’accueil.</li>
+          </ol>
+        </section>
+        <section>
+          <h3>Android : app Binary Eye</h3>
+          <ol>
+            <li>Installez <a href="https://play.google.com/store/apps/details?id=de.markusfisch.android.binaryeye" target="_blank" rel="noopener">Binary Eye</a> (gratuite, open source).</li>
+            <li>Dans ses réglages : <strong>Actions automatiques</strong>, <strong>Ajouter une action</strong>.</li>
+            <li>Expression régulière <code>97[89][0-9]{10}</code>, type <strong>Ouvrir l’URL</strong>, et l’adresse telle quelle comme modèle d’URL.</li>
+          </ol>
+        </section>
+      </div>
+      <p class="phone-more"><a href="https://github.com/Bublex/biblib/blob/main/docs/telephone.md" target="_blank" rel="noopener">Mode d’emploi détaillé</a></p>
+    </details>
   </main>
   <script type="module" src="options.js"></script>
 </body>
