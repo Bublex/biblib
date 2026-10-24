@@ -7,6 +7,7 @@ Extension Chrome. Sur la fiche d'un livre (Amazon, Babelio, Bedetheque, Fnac, De
 - **Disponibilité par exemplaire** : annexe, cote, statut, date de retour prévue.
 - **Bibliothèques favorites** : une étoile sur une annexe la fait passer en premier, et la pastille indique si le livre y est.
 - **Fenêtre de l'extension** (icône de la barre d'outils) : recherche manuelle par ISBN ou par titre.
+- **Sur téléphone** : un raccourci iPhone (app Raccourcis) ou Android (app Binary Eye) scanne le code-barres d'un livre et ouvre sa recherche dans votre catalogue. L'extension fournit l'adresse à coller (lien « Sur téléphone » de sa fenêtre). Mode d'emploi : [docs/telephone.md](docs/telephone.md).
 
 ## Installation (mode développeur)
 

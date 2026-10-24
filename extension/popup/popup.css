@@ -4,6 +4,7 @@ body { margin: 0; width: 380px; background: #ffffff; }
 .popup-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 8px; }
 .popup .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
 .popup .brand img { border-radius: 6px; }
+.head-links { display: flex; gap: 14px; }
 .search { display: flex; gap: 8px; padding: 0 14px 12px; border-bottom: 1px solid var(--line); }
 .search input { flex: 1; min-width: 0; font: inherit; color: var(--fg); background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
 .search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }

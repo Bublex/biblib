@@ -50,6 +50,7 @@ function lookup(book, force = false) {
 }
 
 $('openOptions').addEventListener('click', () => chrome.runtime.openOptionsPage());
+$('openPhone').addEventListener('click', () => chrome.tabs.create({ url: chrome.runtime.getURL('options/options.html#telephone') }));
 
 $('searchForm').addEventListener('submit', (event) => {
   event.preventDefault();
