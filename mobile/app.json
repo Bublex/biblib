@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Biblib",
+    "slug": "biblib",
+    "version": "1.0.0",
+    "scheme": "biblib",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.bublex.biblib",
+      "supportsTablet": false,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.bublex.biblib",
+      "adaptiveIcon": {
+        "backgroundColor": "#284B8F",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Biblib lit le code-barres au dos des livres pour savoir s’ils sont dans vos bibliothèques.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 120,
+          "backgroundColor": "#F6F5F1",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#151517"
+          }
+        }
+      ]
+    ]
+  }
+}
