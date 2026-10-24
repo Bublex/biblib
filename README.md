@@ -7,6 +7,7 @@ Extension Chrome. Sur la fiche d'un livre (Amazon, Babelio, Bedetheque, Fnac, De
 - **Disponibilité par exemplaire** : annexe, cote, statut, date de retour prévue.
 - **Bibliothèques favorites** : une étoile sur une annexe la fait passer en premier, et la pastille indique si le livre y est.
 - **Fenêtre de l'extension** (icône de la barre d'outils) : recherche manuelle par ISBN ou par titre.
+- **Suggestion d'achat** : quand le livre n'est pas au catalogue, un lien mène au formulaire où la bibliothèque recueille les suggestions d'achat (17 réseaux pour l'instant, dont Paris, Lyon, Strasbourg, Rennes, Grenoble et Mérignac). Certains demandent de se connecter au compte lecteur.
 
 ## Installation (mode développeur)
 
@@ -80,6 +81,7 @@ Si son catalogue tourne sous Syracuse (URL en `/Default/doc/SYRACUSE/…`) ou in
 1. Ajoutez une entrée dans `extension/lib/libraries.js`. Pour Syracuse, une ligne `syracuse(id, ville, nom, adresse)` suffit ; passez `{ scenario: 'CATALOGUE' }` si la recherche avancée du portail (`form.aspx?SC=…`) propose ce scénario. Pour inMedia, voir les exemples (`isbnSyntax`).
 2. Ajoutez son domaine à `optional_host_permissions` dans `extension/manifest.json` (`npm test` signale un oubli).
 3. Vérifiez : `node tools/live-check.mjs <id>`.
+4. Facultatif : si le réseau publie une page de suggestion d'achat (formulaire dédié, ou formulaire de contact qui prévoit ce motif), indiquez-la dans `suggestUrl` (option `{ suggestUrl }` de `syracuse()`), puis vérifiez avec `node tools/live-check.mjs <id> --suggest`.
 
 ## Développement
 
@@ -95,7 +97,7 @@ Tests unitaires : ISBN, statuts d'exemplaires, correspondance des titres, connec
 npm run check:live
 ```
 
-Interroge en direct chaque catalogue avec le code de l'extension, à relancer de temps en temps (les portails changent sans prévenir). Le pare-feu de Bordeaux coupe les clients qui se présentent comme Chrome sans en avoir l'empreinte réseau : pour Bordeaux, lancez `LIVE_UA=node npm run check:live`.
+Interroge en direct chaque catalogue avec le code de l'extension, à relancer de temps en temps (les portails changent sans prévenir). `npm run check:live -- --suggest` vérifie à la place que les pages de suggestion d'achat existent toujours (Syracuse répond 200 même pour une page supprimée : le script lit le texte de la page). Le pare-feu de Bordeaux coupe les clients qui se présentent comme Chrome sans en avoir l'empreinte réseau : pour Bordeaux, lancez `LIVE_UA=node npm run check:live`.
 
 ```bash
 CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" node tools/e2e.mjs

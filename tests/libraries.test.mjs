@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { LIBRARIES, originPatterns } from '../extension/lib/libraries.js';
+import { LIBRARIES, originPatterns, libraryMeta } from '../extension/lib/libraries.js';
 import { getConnector } from '../extension/lib/connectors/index.js';
 
 const manifest = JSON.parse(readFileSync(new URL('../extension/manifest.json', import.meta.url), 'utf8'));
@@ -21,6 +21,16 @@ test('chaque catalogue figure dans les autorisations optionnelles du manifeste',
 test('le manifeste ne demande pas d’accès à un catalogue inconnu', () => {
   const used = new Set(LIBRARIES.flatMap(originPatterns));
   assert.deepEqual(manifest.optional_host_permissions.filter((origin) => !used.has(origin)), []);
+});
+
+test('les pages de suggestion d’achat sont des adresses web transmises à l’interface', () => {
+  const withSuggest = LIBRARIES.filter((l) => l.suggestUrl);
+  assert.ok(withSuggest.length > 0);
+  for (const lib of withSuggest) {
+    assert.match(lib.suggestUrl, /^https?:\/\//, lib.id);
+    assert.equal(libraryMeta(lib).suggestUrl, lib.suggestUrl, lib.id);
+  }
+  assert.equal(libraryMeta(LIBRARIES.find((l) => l.id === 'bordeaux')).suggestUrl, null);
 });
 
 test('chaque entrée a un connecteur et les champs affichés', () => {

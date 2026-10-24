@@ -223,6 +223,15 @@
           : 'Aucun livre de ce titre au catalogue.';
       body.push(h('p', { class: 'note' }, `${what} `,
         safeUrl(result.searchUrl) ? h('a', { href: result.searchUrl, target: '_blank', rel: 'noopener noreferrer' }, 'Chercher sur le catalogue') : null));
+      if (safeUrl(lib.suggestUrl)) {
+        body.push(h('a', {
+          class: 'suggest',
+          href: lib.suggestUrl,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          title: 'Page de la bibliothèque pour proposer un achat (compte lecteur parfois demandé)',
+        }, 'Suggérer l’achat à la bibliothèque', icon('external', 13)));
+      }
     } else if (result?.status === 'error') {
       body.push(h('p', { class: 'note' }, `${result.error}. `, h('button', { class: 'link', type: 'button', onclick: () => handlers.onRefresh?.() }, 'Réessayer')));
     } else if (result?.status === 'permission') {
@@ -340,7 +349,7 @@ button { font: inherit; color: inherit; }
 .pill { display: flex; align-items: center; gap: 10px; max-width: 320px; padding: 7px 14px 7px 7px; border: 1px solid var(--line);
   border-radius: 999px; background: var(--bg); box-shadow: var(--shadow); cursor: pointer; text-align: left; }
 .pill:hover { border-color: color-mix(in srgb, var(--line) 50%, var(--fg) 25%); }
-.pill:focus-visible, .icon-btn:focus-visible, .star:focus-visible, .cta:focus-visible, .link:focus-visible, .more:focus-visible, .primary:focus-visible {
+.pill:focus-visible, .icon-btn:focus-visible, .star:focus-visible, .cta:focus-visible, .suggest:focus-visible, .link:focus-visible, .more:focus-visible, .primary:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 2px; }
 .pill-icon { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--none-bg); color: var(--none); }
 .pill-text { display: flex; flex-direction: column; min-width: 0; }
@@ -417,6 +426,9 @@ button { font: inherit; color: inherit; }
 .cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 12px; border-radius: 8px; background: var(--accent); color: var(--accent-fg);
   font-weight: 600; font-size: 12.5px; text-decoration: none; }
 .cta:hover { filter: brightness(1.08); }
+.suggest { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 8px;
+  color: var(--accent); font-weight: 600; font-size: 12px; text-decoration: none; }
+.suggest:hover { background: var(--soft); }
 .empty { padding: 16px 14px; }
 .empty p { margin: 0 0 12px; color: var(--muted); }
 .primary { padding: 8px 14px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-fg); font-weight: 600; cursor: pointer; }

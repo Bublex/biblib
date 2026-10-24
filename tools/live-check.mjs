@@ -1,6 +1,6 @@
 // Vérifie en direct que chaque catalogue répond toujours comme attendu (à lancer de temps en temps :
 // les portails changent sans prévenir). Utilise le code de l'extension tel quel.
-// Usage : node tools/live-check.mjs [id-bibliotheque…] [--isbn=9782070612758]
+// Usage : node tools/live-check.mjs [id-bibliotheque…] [--isbn=9782070612758] [--suggest]
 //
 // Node n'a pas de magasin de cookies : on en simule un, comme le fait Chrome pour l'extension.
 import { LIBRARIES, getLibrary } from '../extension/lib/libraries.js';
@@ -40,6 +40,25 @@ globalThis.fetch = async (url, options = {}, hops = 0) => {
   }
   return res;
 };
+
+// --suggest : vérifie seulement que les pages de suggestion d'achat existent toujours.
+// Syracuse répond 200 même pour une page supprimée (« Cette page n'existe plus ») : on lit donc le texte.
+if (args.includes('--suggest')) {
+  let broken = 0;
+  await Promise.all(libs.filter((lib) => lib.suggestUrl).map(async (lib) => {
+    try {
+      const res = await fetch(lib.suggestUrl, { signal: AbortSignal.timeout(30000) });
+      const text = await res.text();
+      const ok = res.ok && /suggest|acquisition/i.test(text) && !/n['’]existe plus|<title>\s*Erreur/i.test(text);
+      if (!ok) broken++;
+      console.log(`${ok ? '✓' : '✗'} ${lib.id.padEnd(19)} HTTP ${res.status} ${lib.suggestUrl}`);
+    } catch (error) {
+      broken++;
+      console.log(`✗ ${lib.id.padEnd(19)} ${humanError(error)} ${lib.suggestUrl}`);
+    }
+  }));
+  process.exit(broken ? 1 : 0);
+}
 
 const book = { isbns: [isbn], title: '', authors: [] };
 let failures = 0;
