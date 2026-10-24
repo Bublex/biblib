@@ -23,14 +23,19 @@ Les autres réseaux Syracuse suivent le même modèle que Mérignac ou Paris. Le
 
 ## 2. iPhone : app Raccourcis
 
-1. Ouvrez **Raccourcis** et touchez **+**.
-2. Ajoutez l'action de scan : cherchez « code-barres » dans les actions et choisissez celle qui scanne un code QR ou un code-barres.
-3. Ajoutez l'action **URL**. Collez l'adresse, sélectionnez `{RESULT}` et remplacez-le par la variable produite par le scan, proposée au-dessus du clavier.
-4. Ajoutez l'action **Ouvrir les URL**.
-5. Renommez le raccourci, par exemple « Biblib ».
-6. Pour l'avoir sous la main : ajoutez-le à l'écran d'accueil, au bouton Action si votre iPhone en a un, ou au « Toucher le dos » (Réglages → Accessibilité → Toucher). « Dis Siri, Biblib » fonctionne aussi.
+<img src="raccourci-iphone.jpg" alt="Le raccourci dans l'app Raccourcis : Scanner un code-barres ou QR, Obtenir le texte de Codes QR/codes-barres, Texte avec l'adresse de Mérignac suivie de la variable Texte, Ouvrir Texte" width="320" align="right">
 
-Plusieurs bibliothèques : après le scan, ajoutez l'action **Choisir dans le menu** avec une entrée par réseau et une action **URL** dans chaque entrée, puis une seule action **Ouvrir les URL** après le menu.
+1. Ouvrez **Raccourcis** et touchez **+**.
+2. Ajoutez l'action **Scanner un code-barres ou QR**.
+3. Ajoutez l'action **Obtenir le texte de**, appliquée à la variable **Codes QR/codes-barres**.
+4. Ajoutez l'action **Texte**. Collez l'adresse, sélectionnez `{RESULT}` et remplacez-le par la variable **Texte** de l'étape précédente, proposée au-dessus du clavier.
+5. Ajoutez l'action **Ouvrir les URL**. Elle s'affiche « Ouvrir Texte ».
+6. Renommez le raccourci, par exemple « Biblib ».
+7. Pour l'avoir sous la main : ajoutez-le à l'écran d'accueil, au bouton Action si votre iPhone en a un, ou au « Toucher le dos » (Réglages → Accessibilité → Toucher). « Dis Siri, Biblib » fonctionne aussi.
+
+Plusieurs bibliothèques : après **Obtenir le texte de**, ajoutez l'action **Choisir dans le menu** avec une entrée par réseau et une action **Texte** dans chaque entrée, puis une seule action **Ouvrir les URL** après le menu.
+
+<br clear="right">
 
 ## 3. Android : app Binary Eye
 
