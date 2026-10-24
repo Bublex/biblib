@@ -4,7 +4,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as Haptics from 'expo-haptics';
 import { Stack, useIsFocused, useRouter } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
-import { Alert, FlatList, Linking, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, FlatList, Linking, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { toIsbn13 } from '../../../extension/lib/isbn.js';
 import { Button, Card, ToneDot } from '../components.js';
 import { addBook, getState, removeBook, summarize, useStore } from '../store.js';
@@ -12,13 +12,23 @@ import { useColors } from '../theme.js';
 
 const SAME_CODE_DELAY = 4000;
 
+// Dans un navigateur, la caméra n'est accessible qu'en HTTPS (ou sur localhost). Sur http://192.168.x.x,
+// navigator.mediaDevices n'existe pas : la demande d'autorisation échoue sans rien afficher.
+const webWithoutCamera = Platform.OS === 'web' && !globalThis.isSecureContext;
+
 function Scanner({ onScan }) {
   const focused = useIsFocused();
   const [permission, requestPermission] = useCameraPermissions();
   const [torch, setTorch] = useState(false);
 
   let content;
-  if (!permission) {
+  if (webWithoutCamera) {
+    content = (
+      <View style={styles.cameraMessage}>
+        <Text style={styles.cameraText}>Le navigateur n’autorise pas l’appareil photo sur une adresse en http://. Ouvrez Biblib avec l’app Expo Go (QR code du terminal), ou saisissez un ISBN ci-dessous.</Text>
+      </View>
+    );
+  } else if (!permission) {
     content = null;
   } else if (!permission.granted) {
     content = (

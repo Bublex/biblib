@@ -31,6 +31,8 @@ npm install
 
 **Avec Expo Go** (le plus rapide) : installez Expo Go depuis l'App Store, lancez `npx expo start`, puis scannez le QR code avec l'appareil photo de l'iPhone (Mac et iPhone sur le même Wi-Fi). Limite : Expo Go n'applique pas les exceptions HTTP de l'app, donc Toulouse et le SITPI n'y répondent pas.
 
+N'ouvrez pas l'adresse `http://192.168…:8081` dans Safari : c'est la version web, qui ne sert qu'à contrôler l'interface sur un ordinateur. Safari n'autorise l'appareil photo qu'en HTTPS, et un navigateur ne peut de toute façon pas interroger les catalogues (requêtes bloquées entre sites).
+
 **Version native, sur l'iPhone branché au Mac** : `npx expo run:ios --device`. Il faut Xcode, et choisir votre équipe de développement à la première compilation (Xcode → Signing & Capabilities).
 
 ## Publier sur l'App Store
