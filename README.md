@@ -81,15 +81,19 @@ Si son catalogue tourne sous Syracuse (URL en `/Default/doc/SYRACUSE/…`) ou in
 2. Ajoutez son domaine à `optional_host_permissions` dans `extension/manifest.json` (`npm test` signale un oubli).
 3. Vérifiez : `node tools/live-check.mjs <id>`.
 
+## App iPhone
+
+Le dossier [`mobile/`](mobile/README.md) contient l'app iPhone (Expo) : on scanne le code-barres d'un livre et l'app indique sa disponibilité dans les bibliothèques choisies. Elle réutilise les connecteurs de `extension/lib/` sans les copier : une correction de connecteur sert aux deux.
+
 ## Développement
 
-Aucune dépendance, Node 20 ou plus.
+L'extension n'a aucune dépendance. Les tests demandent Node 22 ou plus.
 
 ```bash
 npm test
 ```
 
-Tests unitaires : ISBN, statuts d'exemplaires, correspondance des titres, connecteurs avec réponses simulées, analyse de vraies pages de Toulouse et Rennes (`tests/fixtures/`).
+Tests unitaires : ISBN, statuts d'exemplaires, correspondance des titres, connecteurs avec réponses simulées, analyse de vraies pages de Toulouse et Rennes (`tests/fixtures/`), et logique de l'app mobile (`tests/mobile-*`).
 
 ```bash
 npm run check:live
@@ -103,7 +107,7 @@ CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" node 
 
 Test de bout en bout : charge l'extension dans Chrome (profil temporaire, headless), active des bibliothèques, ouvre de vraies fiches et enregistre des captures d'écran. Utilisez un Chrome à jour (Bordeaux refuse les versions anciennes).
 
-`npm run icons` régénère les icônes.
+`npm run icons` régénère les icônes de l'extension et de l'app mobile.
 
 ## Publication sur le Chrome Web Store
 
