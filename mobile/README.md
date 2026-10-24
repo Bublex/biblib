@@ -31,6 +31,8 @@ npm install
 
 **Avec Expo Go** (le plus rapide) : installez Expo Go depuis l'App Store, lancez `npx expo start`, puis scannez le QR code avec l'appareil photo de l'iPhone (Mac et iPhone sur le même Wi-Fi). Limite : Expo Go n'applique pas les exceptions HTTP de l'app, donc Toulouse et le SITPI n'y répondent pas.
 
+Sur un iPhone, Expo Go exige un compte Expo (gratuit) : sans lui, il affiche « You need to be signed in to Expo Go and Expo CLI to open your project ». Créez-le sur [expo.dev/signup](https://expo.dev/signup), lancez `npx expo login` sur le Mac, puis connectez-vous au même compte dans Expo Go (icône de compte, en haut à droite) ; `npx expo whoami` indique le compte du Mac. Ce compte ne sert qu'à l'outil de développement : l'app Biblib, elle, n'en demande aucun. La version native ci-dessous n'en demande pas non plus ([annonce d'Expo](https://expo.dev/changelog/expo-go-57-login)).
+
 N'ouvrez pas l'adresse `http://192.168…:8081` dans Safari : c'est la version web, qui ne sert qu'à contrôler l'interface sur un ordinateur. Safari n'autorise l'appareil photo qu'en HTTPS, et un navigateur ne peut de toute façon pas interroger les catalogues (requêtes bloquées entre sites).
 
 **Version native, sur l'iPhone branché au Mac** : `npx expo run:ios --device`. Il faut Xcode, et choisir votre équipe de développement à la première compilation (Xcode → Signing & Capabilities).
